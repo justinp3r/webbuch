@@ -3,6 +3,7 @@ import type { MetaFunction } from '@remix-run/node';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import { FormGroup, Checkbox,FormControlLabel, TextField} from '@mui/material';
 
 export const meta: MetaFunction = () => {
   return [
@@ -32,16 +33,23 @@ export default function Index() {
         <h1>Webbuch</h1>
         <img src="../../public/open-book.png" height="100" width="100"></img>
         <p>Ein Semesterprojekt</p>
-        <input
-          type="text"
-          placeholder="Suchen..."
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <Button>Suchen</Button>
+        <TextField 
+          id="outlined-basic" 
+          label="Outlined"
+          variant="outlined"
+          size="small"
+          />
+        <Button variant="outlined" size="large">Outlined</Button>
         <h3>Buchart</h3>
-        <p><Link to="/notes">Kindle</Link></p>
-        <p><Link to="/notes">Druck</Link></p>
+        <FormGroup>
+          <FormControlLabel 
+            control={<Checkbox
+            checked={true}
+            onChange={undefined}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />} label="Kindle" />
+          <FormControlLabel control={<Checkbox />} label="Druckausgabe" />
+        </FormGroup>
         
       </div>
       
