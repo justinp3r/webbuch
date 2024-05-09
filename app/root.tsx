@@ -1,5 +1,6 @@
 import {
   Links,
+  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -8,6 +9,7 @@ import {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
+    // Websitengerüst beginnt hier
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
@@ -18,6 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <ScrollRestoration />
+        <LiveReload/>
         <Scripts />
       </body>
     </html>
