@@ -7,9 +7,11 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../theme';
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    // Websitengerüst beginnt hier
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
@@ -18,7 +20,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <ThemeProvider theme={theme}>
+          {children}
+        </ThemeProvider>
         <ScrollRestoration />
         <LiveReload/>
         <Scripts />
