@@ -1,36 +1,41 @@
-# Welcome to Remix + Vite!
+<h1> Für den erfolgreichen Start </h1>
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/guides/vite) for details on supported features.
+Zu Beginn sollten die Abhängigkeiten installiert werden:
 
-## Development
+```shellscript
+npm install
+```
 
-Run the Vite dev server:
-
+<h1> Deployment </h1>
+ Dev Server starten:
+ 
 ```shellscript
 npm run dev
 ```
 
-## Deployment
-
-First, build your app for production:
+App im Produktionsmodus bauen:
 
 ```sh
 npm run build
 ```
 
-Then run the app in production mode:
+App im Produktionsmodus starten:
 
 ```sh
 npm start
 ```
 
-Now you'll need to pick a host to deploy it to.
+<h1>Semesterprojekt Webbuch</h1>
+Für die 2. Abgabe des 4. Semesters präsentieren wir hier ein in Gruppenarbeit erstelltes Projekt.
+Dieses Projekt demonstriert eine vollständige Client-Server-Architektur für die Verwaltung von Büchern und besteht aus drei Hauptkomponenten:
+1. PostgreSQL-Datenbank
+Die Buchdaten werden in einer PostgreSQL-Datenbank gespeichert, die in einem Docker-Container läuft.
+2. App-Server
+Der App-Server stellt eine API für den Zugriff auf die Buchdaten bereit. Er ist in Node.js implementiert und kommuniziert mit der PostgreSQL-Datenbank, um Bücher abzurufen, zu erstellen, zu aktualisieren und zu löschen. Die API folgt den REST-Prinzipien.
+3. Web-Client
+Der Web-Client ist eine React-Applikation, die mit Remix und Material-UI erstellt wurde. Er bietet eine benutzerfreundliche Oberfläche für die Verwaltung von Büchern. Admins können Bücher anzeigen, hinzufügen, bearbeiten und löschen.
 
-### DIY
+<h1>Sonstiges</h1>
+Software Engineering, 4. Semester.
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
+Eine Kollaboration zwischen Maxim Weidler, Justin Perrone, Roman Sommer und Tim Spode.
