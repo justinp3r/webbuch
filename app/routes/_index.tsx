@@ -5,6 +5,7 @@ import { AppBar, Toolbar, Typography, Button, IconButton, Container, Box, Card, 
 import { ThemeProvider } from '@mui/material/styles';
 import BasicSelect from './components/Dropdown';
 import MyComponent from './components/komp';
+import CheckboxLabels from './components/Checkbox';
 
 export const meta: MetaFunction = () => {
   return [
@@ -34,24 +35,31 @@ export default function Index() {
         </Box>
         <h1>Webbuch</h1>
         <img src="../../public/open-book.png" height="100" width="100" alt="logo"></img>
-        <p>Ein Semesterprojekt</p>
+        <p>Willkommen!</p>
         <TextField
           label="Suche..."
           id="outlined-size-small"
           size="small"
         />
-        <Button variant="outlined" size="large">Suchen</Button>
-        <h3>Buchart</h3>
+        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}}>Suchen</Button>
+        <h4>Buchart</h4>
         <FormGroup>
           <FormControlLabel 
-            control={<Checkbox
-            checked={true}
-            onChange={undefined}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />} label="Kindle" />
-          <FormControlLabel control={<Checkbox />} label="Druckausgabe" />
+            control={<CheckboxLabels/>} 
+            label="Kindle" />
+          <FormControlLabel 
+            control={<CheckboxLabels/>} 
+            label="Druckausgabe" />
         </FormGroup>
-        <BasicSelect></BasicSelect>
+        <h4>Schlagwörter</h4>
+        <FormGroup>
+          <FormControlLabel 
+            control={<CheckboxLabels/>} 
+            label="Javascript" />
+          <FormControlLabel 
+            control={<CheckboxLabels/>} 
+            label="Typescript" />
+        </FormGroup>
       </div>  
     </main>
   );
