@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+
 import type { MetaFunction } from '@remix-run/node';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, Container, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton, Container, Box, Card, CardContent, CardActions, FormGroup, Checkbox,FormControlLabel, TextField} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { FormGroup, Checkbox,FormControlLabel, TextField} from '@mui/material';
-import SearchAppBar from './components/SearchAppBar';
-
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import BasicSelect from './components/Dropdown';
+import MyComponent from './components/komp';
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,57 +12,9 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
+
 export default function Index() {
-  const [searchTerm, setSearchTerm] = useState('');
-
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    // Hier können Sie die Suchlogik implementieren
-  };
-
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-  
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-  
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    width: '100%',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
-    },
-  }));
-
+  console.log("BIS HIER KOMMT ER IN INDEX");
   return (
     <main id="content">
       <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1' }}>
@@ -81,14 +27,8 @@ export default function Index() {
                 sx={{ flexGrow: 1 }}>
                 HKA
               </Typography>
-              <TextField 
-                id="outlined-basic" 
-                label="Outlined"
-                variant="outlined"
-                size="small"
-                label="Suche"
-              />
-            <Button variant="contained" color="secondary" disableElevation>Login</Button>
+            <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
+            <Button variant="contained" color="secondary" disableElevation>Analyse</Button>
           </Toolbar>
         </AppBar>
         </Box>
@@ -111,10 +51,8 @@ export default function Index() {
           />} label="Kindle" />
           <FormControlLabel control={<Checkbox />} label="Druckausgabe" />
         </FormGroup>
-        
-      </div>
-      
-      
+        <BasicSelect></BasicSelect>
+      </div>  
     </main>
   );
 }
