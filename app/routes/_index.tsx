@@ -14,7 +14,6 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  console.log("BIS HIER KOMMT ER IN INDEX");
   return (
     <main id="content">
       <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1' }}>
