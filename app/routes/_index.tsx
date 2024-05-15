@@ -1,10 +1,8 @@
 
 import type { MetaFunction } from '@remix-run/node';
-import { AppBar, Toolbar, Typography, Button, Box, FormGroup,FormControlLabel, TextField, ThemeProvider} from '@mui/material';
-import ControlledCheckbox from './components/Checkbox';
-import Checkboxes from './components/CheckboxV2';
+import { AppBar, Toolbar, Typography, Button, Box, FormGroup,FormControlLabel, TextField, Checkbox} from '@mui/material';
 import React from 'react';
-import theme from '../../theme';
+import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,7 +14,10 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   
   return (
-    <ThemeProvider theme={theme}>
+    <React.Fragment>
+      <main id="content">
+      <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1' }}>
+
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed">
           <Toolbar>
@@ -39,25 +40,21 @@ export default function Index() {
           id="outlined-size-small"
           size="small"
         />
-        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} type="submit" >Suchen</Button>
+        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
         <h4>Buchart</h4>
         <FormGroup>
           <FormControlLabel 
-            control={<ControlledCheckbox/>} 
+            control={<Checkbox/>} 
             label="Kindle" />
           <FormControlLabel 
-            control={<ControlledCheckbox/>} 
+            control={<Checkbox/>} 
             label="Druckausgabe" />
         </FormGroup>
         <h4>Schlagwörter</h4>
-        <FormGroup>
-          <FormControlLabel 
-            control={<ControlledCheckbox/>} 
-            label="Javascript" />
-          <FormControlLabel 
-            control={<ControlledCheckbox/>} 
-            label="Typescript" />
-        </FormGroup>
-    </ThemeProvider>
+        <CheckboxSchlagwörter/>
+    </div>  
+    </main>
+    </React.Fragment>
+
   );
 }

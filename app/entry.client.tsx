@@ -6,8 +6,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ClientStyleContext from './src/ClientStyleContext';
 import createEmotionCache from './src/createEmotionCache';
-import theme from '../theme';
-
 interface ClientCacheProviderProps {
   children: React.ReactNode;
 }
@@ -35,11 +33,9 @@ const hydrate = () => {
     ReactDOM.hydrateRoot(
       document,
       <ClientCacheProvider>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <RemixBrowser />
-        </ThemeProvider>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <RemixBrowser />
       </ClientCacheProvider>,
     );
   });
@@ -50,5 +46,5 @@ if (window.requestIdleCallback) {
 } else {
   // Safari doesn't support requestIdleCallback
   // https://caniuse.com/requestidlecallback
-  setTimeout(hydrate, 1);
+  window.setTimeout(hydrate, 1);
 }
