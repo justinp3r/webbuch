@@ -1,4 +1,5 @@
 import {
+  Link as RemixLink,
   Links,
   Meta,
   Outlet,
@@ -8,10 +9,8 @@ import {
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
-import CheckboxSchlagwörter from "./routes/components/CheckboxSchlagwörter";
 import React from "react";
-import { AppBar, Box, Button, TextField, Toolbar, Typography } from "@mui/material";
-import CheckboxArt from "./routes/components/CheckboxArt";
+import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -34,9 +33,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         variant="h6" 
                         component="div" 
                         sx={{ flexGrow: 1 }}>
+                        <Link to="/" color="primary.light" component={RemixLink}>
                         WEBBUCH
+                        </Link>
                       </Typography>
-                    <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
+                    <Link to="/LogIn" color="secondary" component={RemixLink}>
+                      <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
+                    </Link>
                     <Button variant="contained" color="secondary" disableElevation>Analyse</Button>
                   </Toolbar>
                 </AppBar>
