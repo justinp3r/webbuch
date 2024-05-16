@@ -3,6 +3,7 @@ import type { MetaFunction } from '@remix-run/node';
 import { AppBar, Toolbar, Typography, Button, Box, FormGroup,FormControlLabel, TextField, Checkbox} from '@mui/material';
 import React from 'react';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
+import CheckboxArt from './components/CheckboxArt';
 
 export const meta: MetaFunction = () => {
   return [
@@ -42,14 +43,7 @@ export default function Index() {
         />
         <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
         <h4>Buchart</h4>
-        <FormGroup>
-          <FormControlLabel 
-            control={<Checkbox/>} 
-            label="Kindle" />
-          <FormControlLabel 
-            control={<Checkbox/>} 
-            label="Druckausgabe" />
-        </FormGroup>
+        <CheckboxArt/>
         <h4>Schlagwörter</h4>
         <CheckboxSchlagwörter/>
     </div>  
