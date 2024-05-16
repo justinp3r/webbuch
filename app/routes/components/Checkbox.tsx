@@ -1,18 +1,19 @@
-import * as React from 'react';
 import { Checkbox } from  '@mui/material';
+import React from 'react';
 
-export default function CheckboxLabels() {
+export default function ControlledCheckbox() {
 
-    const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(true);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
-    };
+  const handleChange=() => {console.log("Yes");}
+  
   return (
     <Checkbox
-        checked={true}
-        onChange={e => { console.log(e);}}
-        inputProps={{ 'aria-label': 'controlled' }}
+      checked={checked}
+      onMouseOver={(handleChange)}
+      onClick={handleChange}
+      onChange={handleChange}
+      inputProps={{ 'aria-label': 'controlled' }}
     />
   );
 }
