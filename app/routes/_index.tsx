@@ -1,8 +1,8 @@
 
 import type { MetaFunction } from '@remix-run/node';
 import { Button, TextField} from '@mui/material';
-import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
-import CheckboxArt from './components/CheckboxArt';
+import CheckboxSchlagwörter from './components/checkboxSchlagwörter';
+import CheckboxArt from './components/checkboxArt';
 
 export const meta: MetaFunction = () => {
   return [
@@ -30,4 +30,4 @@ export default function Index() {
         
     </>
   );
-}
+} 
