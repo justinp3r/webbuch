@@ -1,10 +1,17 @@
 
 import type { MetaFunction } from '@remix-run/node';
+<<<<<<<<< Temporary merge branch 1
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, IconButton, Container, Box, Card, CardContent, CardActions, FormGroup, Checkbox,FormControlLabel, TextField} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import BasicSelect from './components/Dropdown';
 import MyComponent from './components/komp';
+import CheckboxLabels from './components/Checkbox';
+=========
+import { AppBar, Toolbar, Typography, Button, Box, FormGroup,FormControlLabel, TextField, Checkbox} from '@mui/material';
+import React from 'react';
+import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
+>>>>>>>>> Temporary merge branch 2
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,25 +23,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   
   return (
-    <React.Fragment>
-      <main id="content">
-      <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1' }}>
-
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed">
-          <Toolbar>
-              <Typography 
-                variant="h6" 
-                component="div" 
-                sx={{ flexGrow: 1 }}>
-                HKA
-              </Typography>
-            <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
-            <Button variant="contained" color="secondary" disableElevation>Analyse</Button>
-          </Toolbar>
-        </AppBar>
-        </Box>
-        <h1>Webbuch</h1>
+    <>
         <img src="../../public/open-book.png" height="100" width="100" alt="logo"></img>
         <p>Willkommen!</p>
         <TextField
@@ -42,19 +31,42 @@ export default function Index() {
           id="outlined-size-small"
           size="small"
         />
-        <Button variant="outlined" size="large">Suchen</Button>
-        <h3>Buchart</h3>
+<<<<<<<<< Temporary merge branch 1
+        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}}>Suchen</Button>
+        <h4>Buchart</h4>
         <FormGroup>
           <FormControlLabel 
-            control={<Checkbox
-            checked={true}
-            onChange={undefined}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />} label="Kindle" />
-          <FormControlLabel control={<Checkbox />} label="Druckausgabe" />
+            control={<CheckboxLabels/>} 
+            label="Kindle" />
+          <FormControlLabel 
+            control={<CheckboxLabels/>} 
+            label="Druckausgabe" />
         </FormGroup>
-        <BasicSelect></BasicSelect>
+        <h4>Schlagwörter</h4>
+        <FormGroup>
+          <FormControlLabel 
+            control={<CheckboxLabels/>} 
+            label="Javascript" />
+          <FormControlLabel 
+            control={<CheckboxLabels/>} 
+            label="Typescript" />
+        </FormGroup>
       </div>  
+=========
+        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
+        <h4>Buchart</h4>
+        <FormGroup>
+          <FormControlLabel 
+            control={<Checkbox/>} 
+            label="Kindle" />
+          <FormControlLabel 
+            control={<Checkbox/>} 
+            label="Druckausgabe" />
+        </FormGroup>
+        <h4>Schlagwörter</h4>
+        <CheckboxSchlagwörter/>
+    </div>  
+>>>>>>>>> Temporary merge branch 2
     </main>
     </React.Fragment>
 
