@@ -1,17 +1,14 @@
 
 import type { MetaFunction } from '@remix-run/node';
-<<<<<<<<< Temporary merge branch 1
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, IconButton, Container, Box, Card, CardContent, CardActions, FormGroup, Checkbox,FormControlLabel, TextField} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import BasicSelect from './components/Dropdown';
 import MyComponent from './components/komp';
 import CheckboxLabels from './components/Checkbox';
-=========
 import { AppBar, Toolbar, Typography, Button, Box, FormGroup,FormControlLabel, TextField, Checkbox} from '@mui/material';
 import React from 'react';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
->>>>>>>>> Temporary merge branch 2
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,7 +28,6 @@ export default function Index() {
           id="outlined-size-small"
           size="small"
         />
-<<<<<<<<< Temporary merge branch 1
         <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}}>Suchen</Button>
         <h4>Buchart</h4>
         <FormGroup>
@@ -51,8 +47,7 @@ export default function Index() {
             control={<CheckboxLabels/>} 
             label="Typescript" />
         </FormGroup>
-      </div>  
-=========
+      <div>  
         <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
         <h4>Buchart</h4>
         <FormGroup>
@@ -66,8 +61,6 @@ export default function Index() {
         <h4>Schlagwörter</h4>
         <CheckboxSchlagwörter/>
     </div>  
->>>>>>>>> Temporary merge branch 2
-    </main>
     </React.Fragment>
 
   );
