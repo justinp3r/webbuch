@@ -1,59 +1,19 @@
-
 import type { MetaFunction } from '@remix-run/node';
 import { Button, TextField} from '@mui/material';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
 import CheckboxArt from './components/CheckboxArt';
 import { useState, useEffect } from 'react';
 import { gql, GraphQLClient } from 'graphql-request';
+import GraphHook from '~/graphql/graphql.hooks';
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Webbuch" },
-    { name: "description", content: "Welcome to Remix!" },
+    { name: "description", content: "Welcome to our Semesterproject!" },
   ];
 };
 
-const fetchData = async () => {
-  const endpoint = `http://localhost:3000/graphql/`;
-  const graphQLClient = new GraphQLClient(endpoint, {
-    method: `GET`,
-    jsonSerializer: {
-      parse: JSON.parse,
-      stringify: JSON.stringify,
-    },
-  })
-
-  const query = gql`
-    query getBook($id: String!) {
-      buch(id: $id) {
-        isbn
-      }
-    }
-  `;
-
-  const variables = { id: '1' };
-
-  try {
-    const data = await graphQLClient.request(query, variables);
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 export default function Index() {
-  
-  const [graphqlResult, setGraphqlResult] = useState(null);
-
-  useEffect(() => {
-    const fetchDataWrapper = async () => {
-      const result = await fetchData();
-      setGraphqlResult(result);
-    }
-
-    fetchDataWrapper();
-  }, []);
 
   return (
     <>
@@ -69,10 +29,7 @@ export default function Index() {
         <CheckboxArt/>
         <h4>Schlagwörter</h4>
         <CheckboxSchlagwörter/>
-        {graphqlResult && (
-        <pre>{JSON.stringify(graphqlResult, null, 2)}</pre>
-      )}
-        
+        <GraphHook></GraphHook> 
     </>
   );
 } 
