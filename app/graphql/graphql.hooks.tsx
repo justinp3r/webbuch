@@ -15,7 +15,7 @@ export default function GraphHook() {
       mode: 'no-cors'
     })
     
-    console.log(loading+" "+error+" "+data)
+    console.log("AKTUELLER STATUS GRAPHQL: loading-"+loading+"| error-"+error+"| data-"+data)
     if (loading) return 'Loading...'
     if (error) return 'Something Bad Happened'
     

@@ -9,6 +9,11 @@ export default defineConfig({
   plugins: [remix(), tsconfigPaths()],
   // Der Port lässt sich folgendermaßen ändern
   // server: {
+  //   headers: {
+  //     "Access-Control-Allow-Origin": "*",
+  //   },
   //   port: 3006,
+  //   cors:false
   // },
 });
+

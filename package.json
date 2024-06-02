@@ -42,6 +42,7 @@
     "@remix-run/react": "^2.9.1",
     "@remix-run/serve": "^2.9.1",
     "@types/nanographql": "2.0.3",
+    "cors": "2.8.5",
     "graphql": "16.8.1",
     "graphql-hooks": "7.0.0",
     "graphql-request": "7.0.1",
