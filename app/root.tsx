@@ -11,16 +11,54 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import React from "react";
 import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
-import { GraphQLClient, ClientContext } from 'graphql-hooks'
 
-const client = new GraphQLClient({
-  url: 'https://localhost:3000/graphql'
-})
+import pkg from '@apollo/client';
+const { gql, useQuery,ApolloClient, InMemoryCache, ApolloProvider } = pkg;
+
+const client = new ApolloClient({
+  uri: 'https://localhost:3000/graphql',
+  cache: new InMemoryCache(),
+});
+
+client
+  .query({
+    query: gql`
+      query GetBuecher {
+        buecher {
+          id
+          isbn
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+
+const GET_BUECHER = gql`
+  query GetBuecher {
+    buecher {
+      id
+      isbn
+    }
+  }
+`;
+
+function DisplayBuecher() {
+  const { loading, error, data } = useQuery(GET_BUECHER);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
+  return data.locations.map(({ id, isbn}) => (
+    <div key={id}>
+      <h3>{isbn}</h3>
+    </div>
+  ));
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <ClientContext.Provider value={client}>
+      <ApolloProvider client={client}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -51,6 +89,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </AppBar>
               </Box>
               <h1>Webbuch</h1>
+              <DisplayBuecher></DisplayBuecher>
             {children}
             </div>  
           </main>
@@ -59,7 +98,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <ScrollRestoration />
       <Scripts />
       </body>
-      </ClientContext.Provider>
+      </ApolloProvider>
     </html>
   );
 }
