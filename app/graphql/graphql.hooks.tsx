@@ -12,7 +12,6 @@ export default function GraphHook() {
       variables: {
         id: "1"
       },
-      mode: 'no-cors'
     })
     
     console.log("AKTUELLER STATUS GRAPHQL: loading-"+loading+"| error-"+error+"| data-"+data)
