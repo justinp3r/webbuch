@@ -2,9 +2,6 @@ import type { MetaFunction } from '@remix-run/node';
 import { Button, TextField} from '@mui/material';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
 import CheckboxArt from './components/CheckboxArt';
-import { useState, useEffect } from 'react';
-import { gql, GraphQLClient } from 'graphql-request';
-import GraphHook from '~/graphql/graphql.hooks';
 
 export const meta: MetaFunction = () => {
   return [
@@ -29,7 +26,6 @@ export default function Index() {
         <CheckboxArt/>
         <h4>Schlagwörter</h4>
         <CheckboxSchlagwörter/>
-        <GraphHook></GraphHook> 
     </>
   );
 } 

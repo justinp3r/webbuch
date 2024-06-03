@@ -1,3 +1,4 @@
+// Anleitung: https://www.apollographql.com/docs/react/get-started
 import {
   Link as RemixLink,
   Links,
@@ -11,14 +12,19 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import React from "react";
 import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
-
+import https from 'https';
 import pkg from '@apollo/client';
 const { gql, useQuery,ApolloClient, InMemoryCache, ApolloProvider } = pkg;
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
   cache: new InMemoryCache(),
+  fetchOptions: {
+    agent: new https.Agent({ rejectUnauthorized: false }),
+  },
 });
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 client
   .query({
@@ -31,7 +37,7 @@ client
       }
     `,
   })
-  .then((result) => console.log(result));
+  .then((result) => console.log(result.data.buecher));
 
 const GET_BUECHER = gql`
   query GetBuecher {
@@ -44,21 +50,21 @@ const GET_BUECHER = gql`
 
 function DisplayBuecher() {
   const { loading, error, data } = useQuery(GET_BUECHER);
-
+  console.log("| LOAD: "+loading+"| ERROR: "+error+"| DATA: "+data)
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
-
-  return data.locations.map(({ id, isbn}) => (
+  
+  return data.buecher.map(({ id, isbn}) => (
     <div key={id}>
-      <h3>{isbn}</h3>
-    </div>
+        <h3>{isbn}</h3>
+      </div>
   ));
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <ApolloProvider client={client}>
+      
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,7 +95,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </AppBar>
               </Box>
               <h1>Webbuch</h1>
-              <DisplayBuecher></DisplayBuecher>
             {children}
             </div>  
           </main>
@@ -98,7 +103,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <ScrollRestoration />
       <Scripts />
       </body>
-      </ApolloProvider>
+      
     </html>
   );
 }
