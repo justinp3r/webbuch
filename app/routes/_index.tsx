@@ -1,5 +1,4 @@
 import type { MetaFunction } from '@remix-run/node';
-import { Button} from '@mui/material';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
 import CheckboxArt from './components/CheckboxArt';
 import {ApolloClient} from "../../node_modules/@apollo/client/core/ApolloClient"; 
@@ -10,6 +9,7 @@ import {gql} from "../../node_modules/graphql-tag/src/index";
 import SearchButton from './components/SearchButton';
 import SearchBar from './components/SearchBar';
 import { useState } from 'react';
+import { Box, Paper, Typography } from '@mui/material';
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
@@ -27,6 +27,11 @@ client
         buecher {
           id
           isbn
+          preis
+          schlagwoerter
+          titel {
+            titel
+          }
         }
       }
     `,
@@ -38,6 +43,11 @@ const GET_BUECHER = gql`
     buecher {
       id
       isbn
+      preis
+      schlagwoerter
+      titel {
+        titel
+      }
     }
   }
 `;
@@ -48,11 +58,18 @@ function DisplayBuecher() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   
-  return data.buecher.map(({ id, isbn}) => (
-    <div key={id}>
-        <h3>{isbn}</h3>
-      </div>
-  ));
+  return (
+    <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2} mt={4}>
+      {data.buecher.map(({ id, isbn, titel, preis,schlagwoerter }) => (
+        <Paper key={id} elevation={3} sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}>
+          <Typography variant="h6">{titel.titel}</Typography>
+          <Typography variant="subtitle1">{schlagwoerter}</Typography>
+          <Typography variant="subtitle1">{isbn}</Typography>
+          <Typography variant="subtitle1">{"UVP: "+ preis+",-"}</Typography>
+        </Paper>
+      ))}
+    </Box>
+  );
 }
 
 export const meta: MetaFunction = () => {
