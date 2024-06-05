@@ -6,7 +6,7 @@
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx"
-, "app/routes/components/Card.jsx", "theme.js", "server.js", "client.js", "app/graphql/nano.graphql.js"  ],
+, "app/routes/components/Card.jsx", "theme.js", "server.js", "client.js", "app/graphql/nano.graphql.js", "app/graphql/Apollo.jsx", "app/graphql/displayISBN.jsx"  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["@remix-run/node", "vite/client"],

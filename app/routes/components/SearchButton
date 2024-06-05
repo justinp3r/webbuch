@@ -1,0 +1,10 @@
+import Button from '@mui/material/Button';
+
+import * as React from 'react';
+
+export default function SearchButton(){
+
+    return(
+        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
+    )
+}

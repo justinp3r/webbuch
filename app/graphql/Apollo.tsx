@@ -2,6 +2,7 @@ import https from 'https';
 import { gql, useQuery,ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 export function ApolloGraph(){
+
   const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
@@ -33,8 +34,11 @@ export function ApolloGraph(){
   `;
 
   const { loading, error, data } = useQuery(GET_BUECHER);
+
   console.log("| LOAD: "+loading+"| ERROR: "+error+"| DATA: "+data)
+
   if (loading) return <p>Loading...</p>;
+  
   if (error) return <p>Error : {error.message}</p>;
 
   return data.buecher.map(({ id, isbn}) => (

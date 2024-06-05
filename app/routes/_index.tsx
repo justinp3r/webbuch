@@ -2,19 +2,18 @@ import type { MetaFunction } from '@remix-run/node';
 import { Button, TextField} from '@mui/material';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
 import CheckboxArt from './components/CheckboxArt';
-import https from 'https';
-import pkg from '@apollo/client';
-const { gql, useQuery,ApolloClient, InMemoryCache, ApolloProvider } = pkg;
+import SearchBar from './components/SearchBar';
+import {ApolloClient} from "../../node_modules/@apollo/client/core/ApolloClient"; 
+import {ApolloProvider} from "../../node_modules/@apollo/client/react/context/ApolloProvider";
+import {InMemoryCache} from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
+import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
+import {gql} from "../../node_modules/graphql-tag/src/index";
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
   cache: new InMemoryCache(),
-  fetchOptions: {
-    agent: new https.Agent({ rejectUnauthorized: false }),
-  },
 });
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 client
   .query({
@@ -64,19 +63,15 @@ export default function Index() {
     <>
         <img src="../../public/open-book.png" height="100" width="100" alt="logo"></img>
         <p>Willkommen!</p>
-        <TextField
-          label="Suche..."
-          id="outlined-size-small"
-          size="small"
-        />
+        <SearchBar/>
         <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
         <h4>Buchart</h4>
         <CheckboxArt/>
         <h4>Schlagwörter</h4>
         <CheckboxSchlagwörter/>
         <ApolloProvider client={client}>
-          <DisplayBuecher></DisplayBuecher>
-        </ApolloProvider>
+      <DisplayBuecher></DisplayBuecher>
+      </ApolloProvider>
     </>
   );
 } 

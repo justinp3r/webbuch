@@ -14,6 +14,7 @@ import React from "react";
 import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  console.log("ROOT ausgeführt")
   return (
     <html lang="en">
       
