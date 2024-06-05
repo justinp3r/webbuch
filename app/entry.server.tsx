@@ -44,6 +44,7 @@ function handleBotRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
+  console.log("handelRequest in SERVER");
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
@@ -94,6 +95,7 @@ function handleBrowserRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
+  console.log("handelRequest in SERVER");
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
@@ -133,7 +135,6 @@ function handleBrowserRequest(
         },
       }
     );
-
     setTimeout(abort, ABORT_DELAY);
   });
 }
