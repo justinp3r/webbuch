@@ -5,6 +5,7 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import ClientStyleContext from './src/ClientStyleContext';
 import createEmotionCache from './src/createEmotionCache';
+
 interface ClientCacheProviderProps {
   children: React.ReactNode;
 }

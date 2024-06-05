@@ -1,19 +1,24 @@
 import type { MetaFunction } from '@remix-run/node';
-import { Button, TextField} from '@mui/material';
+import { Button} from '@mui/material';
 import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
 import CheckboxArt from './components/CheckboxArt';
-import SearchBar from './components/SearchBar';
 import {ApolloClient} from "../../node_modules/@apollo/client/core/ApolloClient"; 
 import {ApolloProvider} from "../../node_modules/@apollo/client/react/context/ApolloProvider";
 import {InMemoryCache} from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
 import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
 import {gql} from "../../node_modules/graphql-tag/src/index";
+import SearchButton from './components/SearchButton';
+import SearchBar from './components/SearchBar';
+import { useState } from 'react';
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
   cache: new InMemoryCache(),
 });
 
+console.log("INDEDX")
+
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 client
   .query({
@@ -58,13 +63,13 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-
+  const [searchText, setSearchText] = useState('');
   return (
     <>
         <img src="../../public/open-book.png" height="100" width="100" alt="logo"></img>
         <p>Willkommen!</p>
-        <SearchBar/>
-        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
+        <SearchBar searchText={searchText} onSearchTextChange={setSearchText} />
+        <SearchButton searchText={searchText} />
         <h4>Buchart</h4>
         <CheckboxArt/>
         <h4>Schlagwörter</h4>
