@@ -12,54 +12,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import React from "react";
 import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
-import https from 'https';
-import pkg from '@apollo/client';
-const { gql, useQuery,ApolloClient, InMemoryCache, ApolloProvider } = pkg;
-
-const client = new ApolloClient({
-  uri: 'https://localhost:3000/graphql',
-  cache: new InMemoryCache(),
-  fetchOptions: {
-    agent: new https.Agent({ rejectUnauthorized: false }),
-  },
-});
-
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-client
-  .query({
-    query: gql`
-      query GetBuecher {
-        buecher {
-          id
-          isbn
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result.data.buecher));
-
-const GET_BUECHER = gql`
-  query GetBuecher {
-    buecher {
-      id
-      isbn
-    }
-  }
-`;
-
-function DisplayBuecher() {
-  const { loading, error, data } = useQuery(GET_BUECHER);
-  console.log("| LOAD: "+loading+"| ERROR: "+error+"| DATA: "+data)
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
-  
-  return data.buecher.map(({ id, isbn}) => (
-    <div key={id}>
-        <h3>{isbn}</h3>
-      </div>
-  ));
-}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
