@@ -12,6 +12,9 @@ const theme = createTheme({
     },
     error: {
       main: red.A400,
+    },
+    success: {
+      main: '#28a745', // Example green color
     }
   },
 });

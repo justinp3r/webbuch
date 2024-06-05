@@ -10,10 +10,13 @@ import {
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
-import React from "react";
+import React, { useState } from "react";
 import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
+import SearchBarHeader from './routes/components/SearchBarHeader';
+import SearchButtonHeader from './routes/components/SearchButtonHeader';
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [searchText, setSearchText] = useState('');
   console.log("ROOT ausgeführt")
   return (
     <html lang="en">
@@ -40,10 +43,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         WEBBUCH
                         </Link>
                       </Typography>
-                    <Link to="/LogIn" color="secondary" component={RemixLink}>
-                      <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
-                    </Link>
-                    <Button variant="contained" color="secondary" disableElevation>Analyse</Button>
+                      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                      <SearchBarHeader searchText={searchText} onSearchTextChange={setSearchText} />
+                      <SearchButtonHeader searchText={searchText} />
+                      </Box>
+                      <Box sx={{ display: 'flex' }}>
+                        <Link to="/LogIn" color="secondary" component={RemixLink}>
+                        <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
+                        <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Analyse</Button>
+                        </Link>
+                      </Box>
+                    
                   </Toolbar>
                 </AppBar>
               </Box>

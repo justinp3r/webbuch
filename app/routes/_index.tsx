@@ -6,10 +6,8 @@ import {ApolloProvider} from "../../node_modules/@apollo/client/react/context/Ap
 import {InMemoryCache} from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
 import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
 import {gql} from "../../node_modules/graphql-tag/src/index";
-import SearchButton from './components/SearchButton';
-import SearchBar from './components/SearchBar';
-import { useState } from 'react';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Rating, Typography } from '@mui/material';
+import RatingStars from './components/RatingStars';
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
@@ -80,20 +78,35 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const [searchText, setSearchText] = useState('');
   return (
     <>
-        <img src="../../public/open-book.png" height="100" width="100" alt="logo"></img>
+      <Box display="flex">
+      <Box
+        sx={{
+          width: '250px',
+          padding: '20px',
+          borderRight: '1px solid #ccc',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+        }}
+      >
+        <img src="../../public/open-book.png" height="100" width="100" alt="logo" />
         <p>Willkommen!</p>
-        <SearchBar searchText={searchText} onSearchTextChange={setSearchText} />
-        <SearchButton searchText={searchText} />
         <h4>Buchart</h4>
-        <CheckboxArt/>
+        <CheckboxArt />
         <h4>Schlagwörter</h4>
-        <CheckboxSchlagwörter/>
+        <CheckboxSchlagwörter />
+        <h4>Bewertungen</h4>
+        <RatingStars></RatingStars> 
+      </Box>
+      
+      <Box sx={{ flexGrow: 1, padding: '20px' }}>
         <ApolloProvider client={client}>
-      <DisplayBuecher></DisplayBuecher>
-      </ApolloProvider>
+          <DisplayBuecher />
+        </ApolloProvider>
+      </Box>
+    </Box>
     </>
   );
 } 
