@@ -16,6 +16,7 @@ const client = new ApolloClient({
 
 console.log("INDEDX")
 
+// TODO: Workaround für Zertifikate finden
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 client
