@@ -35,38 +35,47 @@ export const setSucheBuchID = (newValue: string) => {sucheBuchID= newValue;};
 export const getSucheAlleBuecher= () => sucheAlleBuecher;
 export const setSucheAlleBuecher = (newValue: boolean) => {sucheAlleBuecher= newValue;};
 
+import { Button } from '@mui/material';
+
+import { Button } from '@mui/material';
+
+import { Button, Box } from '@mui/material';
+
 export default function Index() {
-  
   return (
     <>
       <Box display="flex">
-      <Box
-        sx={{
-          width: '250px',
-          padding: '20px',
-          borderRight: '1px solid #ccc',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-        }}
-      >
-        <img src="../../public/open-book.png" height="100" width="100" alt="logo" />
-        <p>Willkommen!</p>
-        <h4>Buchart</h4>
-        <CheckboxArt />
-        <h4>Schlagwörter</h4>
-        <CheckboxSchlagwörter />
-        <h4>Bewertungen</h4>
-        <RatingStars></RatingStars> 
+        <Box
+          sx={{
+            width: '250px',
+            padding: '20px',
+            borderRight: '1px solid #ccc',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+        >
+          <img src="../../public/open-book.png" height="100" width="100" alt="logo" />
+          <p>Willkommen!</p>
+          <h4>Buchart</h4>
+          <CheckboxArt />
+          <h4>Schlagwörter</h4>
+          <CheckboxSchlagwörter />
+          <h4>Bewertungen</h4>
+          <RatingStars></RatingStars>
+          <Box sx={{ marginTop: '1rem' }}>
+            <Button variant="outlined" color="primary">
+              Filter los
+            </Button>
+          </Box>
+        </Box>
+        <Box sx={{ flexGrow: 1, padding: '20px' }}>
+          <ApolloProvider client={client}>
+            <AlleBuecher condition={sucheAlleBuecher} />
+            <BuchMitID id={sucheBuchID}></BuchMitID>
+          </ApolloProvider>
+        </Box>
       </Box>
-      
-      <Box sx={{ flexGrow: 1, padding: '20px' }}>
-        <ApolloProvider client={client}>
-          <AlleBuecher condition={sucheAlleBuecher}/>
-          <BuchMitID id={sucheBuchID}></BuchMitID>
-        </ApolloProvider>
-      </Box>
-    </Box>
     </>
   );
-} 
+}
