@@ -45,7 +45,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       </Typography>
                       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
                       <SearchBarHeader searchText={searchText} onSearchTextChange={setSearchText} />
-                      <SearchButtonHeader searchText={searchText} />
+                      <Link to="/SearchResults" color="secondary" component={RemixLink}>
+                        <SearchButtonHeader searchText={searchText} />
+                      </Link>
                       </Box>
                       <Box sx={{ display: 'flex' }}>
                         <Link to="/LogIn" color="secondary" component={RemixLink}>
@@ -53,7 +55,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Analyse</Button>
                         </Link>
                       </Box>
-                    
                   </Toolbar>
                 </AppBar>
               </Box>

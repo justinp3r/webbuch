@@ -10,6 +10,13 @@ import { Box, Paper, Typography } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
+import { getSucheAlleBuecher,  getSucheBuchID } from './_index';
+
+const SucheAlleBuecher=getSucheAlleBuecher();
+const SucheBuchID = getSucheBuchID();
+
+console.log("ALLE BÜCHER: "+SucheAlleBuecher);
+console.log("BUCH ID: "+SucheBuchID);
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
@@ -25,15 +32,6 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to our Semesterproject!" },
   ];
 };
-
-let sucheBuchID: string | null=null;
-let sucheAlleBuecher=true;
-
-export const getSucheBuchID= () => sucheBuchID;
-export const setSucheBuchID = (newValue: string) => {sucheBuchID= newValue;};
-
-export const getSucheAlleBuecher= () => sucheAlleBuecher;
-export const setSucheAlleBuecher = (newValue: boolean) => {sucheAlleBuecher= newValue;};
 
 export default function Index() {
   
@@ -62,8 +60,8 @@ export default function Index() {
       
       <Box sx={{ flexGrow: 1, padding: '20px' }}>
         <ApolloProvider client={client}>
-          <AlleBuecher condition={sucheAlleBuecher}/>
-          <BuchMitID id={sucheBuchID}></BuchMitID>
+          <AlleBuecher condition={SucheAlleBuecher}/>
+          <BuchMitID id={SucheBuchID}></BuchMitID>
         </ApolloProvider>
       </Box>
     </Box>
