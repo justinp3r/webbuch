@@ -39,7 +39,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         variant="h6" 
                         component="div" 
                         sx={{ flexGrow: 1 }}>
-                        <a href="/"  color="primary.light" >
+                        <a href="/" color="primary.light" >
                         WEBBUCH
                         </a>
                       </Typography>
