@@ -42,9 +42,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         variant="h6" 
                         component="div" 
                         sx={{ flexGrow: 1 }}>
-                        <Link to="/" onClick={handleClickWebbuch} color="primary.light" component={RemixLink}>
+                        <a href="/" onClick={handleClickWebbuch} color="primary.light">
                         WEBBUCH
-                        </Link>
+                        </a>
                       </Typography>
                       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
                       <SearchBarHeader searchText={searchText} onSearchTextChange={setSearchText} />
