@@ -18,6 +18,9 @@ import SearchButtonHeader from './routes/components/SearchButtonHeader';
 export function Layout({ children }: { children: React.ReactNode }) {
   const [searchText, setSearchText] = useState('');
   console.log("ROOT ausgeführt")
+  function handleClickWebbuch(){
+    window.location.reload();
+  }
   return (
     <html lang="en">
       
@@ -39,7 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         variant="h6" 
                         component="div" 
                         sx={{ flexGrow: 1 }}>
-                        <Link to="/" color="primary.light" component={RemixLink}>
+                        <Link to="/" onClick={handleClickWebbuch} color="primary.light" component={RemixLink}>
                         WEBBUCH
                         </Link>
                       </Typography>
