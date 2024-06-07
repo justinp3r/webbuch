@@ -6,7 +6,7 @@ import {ApolloProvider} from "../../node_modules/@apollo/client/react/context/Ap
 import {InMemoryCache} from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
 import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
 import {gql} from "../../node_modules/graphql-tag/src/index";
-import { Box, Paper, Rating, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import RatingStars from './components/RatingStars';
 
 const client = new ApolloClient({
@@ -70,6 +70,41 @@ function DisplayBuecher() {
     </Box>
   );
 }
+//------------------------------------------
+const FILTER_BOOKS = gql`
+  query BUCH($id: ID!) {
+    buch(id: $id) {
+      id
+      isbn
+      preis
+      schlagwoerter
+      titel {
+        titel
+      }
+    }
+  }
+`;
+
+function BuchMitID({ id }) {
+  const { loading, error, data } = useQuery(FILTER_BOOKS, {
+    variables: { id },
+  });
+
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
+
+  return (
+    <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2} mt={4}>
+        <Paper key={id} elevation={3} sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}>
+          <Typography variant="h6">{data.buch.titel.titel}</Typography>
+          <Typography variant="subtitle1">{data.buch.schlagwoerter}</Typography>
+          <Typography variant="subtitle1">{data.buch.isbn}</Typography>
+          <Typography variant="subtitle1">{"UVP: "+ data.buch.preis+",-"}</Typography>
+        </Paper>
+    </Box>
+  );
+}
+//------------------------------------------
 
 export const meta: MetaFunction = () => {
   return [
@@ -105,6 +140,7 @@ export default function Index() {
       <Box sx={{ flexGrow: 1, padding: '20px' }}>
         <ApolloProvider client={client}>
           <DisplayBuecher />
+          <BuchMitID id="1"></BuchMitID>
         </ApolloProvider>
       </Box>
     </Box>
