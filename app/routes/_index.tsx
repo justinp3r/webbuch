@@ -10,6 +10,7 @@ import { Box, Paper, Typography } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
+import { Button } from '@mui/material';
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
@@ -34,12 +35,6 @@ export const setSucheBuchID = (newValue: string) => {sucheBuchID= newValue;};
 
 export const getSucheAlleBuecher= () => sucheAlleBuecher;
 export const setSucheAlleBuecher = (newValue: boolean) => {sucheAlleBuecher= newValue;};
-
-import { Button } from '@mui/material';
-
-import { Button } from '@mui/material';
-
-import { Button, Box } from '@mui/material';
 
 export default function Index() {
   return (
