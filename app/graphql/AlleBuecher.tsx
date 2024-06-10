@@ -1,7 +1,7 @@
 import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
 import {gql} from "../../node_modules/graphql-tag/src/index";
 import { Box, Paper, Typography } from '@mui/material';
-
+import { Link } from "@remix-run/react";
 export default function AlleBuecher({condition}){
   
   if (condition ===false){
@@ -31,10 +31,12 @@ export default function AlleBuecher({condition}){
     <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2} mt={4}>
       {data.buecher.map(({ id, isbn, titel, preis,schlagwoerter }) => (
         <Paper key={id} elevation={3} sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}>
-          <Typography variant="h6">{titel.titel}</Typography>
-          <Typography variant="subtitle1">{schlagwoerter}</Typography>
-          <Typography variant="subtitle1">{isbn}</Typography>
-          <Typography variant="subtitle1">{"UVP: "+ preis+",-"}</Typography>
+          <Link to={`/buecher/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Typography variant="h6">{titel.titel}</Typography>
+            <Typography variant="subtitle1">{schlagwoerter}</Typography>
+            <Typography variant="subtitle1">{isbn}</Typography>
+            <Typography variant="subtitle1">{"UVP: "+ preis+",-"}</Typography>
+          </Link>
         </Paper>
       ))}
     </Box>
