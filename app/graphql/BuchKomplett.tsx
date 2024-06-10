@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Rating, Typography } from "@mui/material";
 import {gql} from "../../node_modules/graphql-tag/src/index";
 import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
 
@@ -43,6 +43,7 @@ export default function BuchKomplett({id}){
             <Typography variant="subtitle1">{data.buch.lieferbar}</Typography>
             <Typography variant="subtitle1">{data.buch.datum}</Typography>
             <Typography variant="subtitle1">{data.buch.homepage}</Typography>
+            <Rating value ={data.buch.rating} precision={0.5} readOnly />
           </Paper>
       </Box>
     );
