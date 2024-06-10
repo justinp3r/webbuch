@@ -1,51 +1,40 @@
-import { V2_MetaFunction, json, redirect } from "@remix-run/node";
-import type { ActionArgs } from "@remix-run/node";
-import Api from "../api";
-import { Form } from "@remix-run/react";
-import { useNavigation } from "@remix-run/react";
-import { getSession, commitSession } from "../sessions";
-import { Constants } from "utils/constants";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
+import {Link as RemixLink} from "@remix-run/react";
 
-
-
-export async function action({ request }: ActionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  const body = await request.formData();
-  const email = body.get("email");
-  const password = body.get("password");
-  console.log(email);
-  const payload = {
-    email,
-    password,
-  };
-
-  console.log(typeof email);
-
-  const api = new Api();
-  try {
-    const response = await api.loginUser(payload);
-    const sessionPayload = {
-      token: response.data.access_token,
-      user: {
-        email: response.data.user.email,
-        name: response.data.user.name,
-      },
-    };
-    console.log(response.data.access_token);
-    session.set("credentials", sessionPayload);
-    return redirect("/dashboard", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  } catch (error: any) {
-    console.log(error);
-    return json(error.response.data);
-  }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+        Gruppe 6 /
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
 
-export default function Login() {
-  const navigation = useNavigation();
+const defaultTheme = createTheme();
+
+export default function SignIn() {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
 
   return (
     <div>
