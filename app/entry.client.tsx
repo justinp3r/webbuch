@@ -7,43 +7,43 @@ import ClientStyleContext from './src/ClientStyleContext';
 import createEmotionCache from './src/createEmotionCache';
 
 interface ClientCacheProviderProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 function ClientCacheProvider({ children }: ClientCacheProviderProps) {
-  const [cache, setCache] = React.useState(createEmotionCache());
+    const [cache, setCache] = React.useState(createEmotionCache());
 
-  const clientStyleContextValue = React.useMemo(
-    () => ({
-      reset() {
-        setCache(createEmotionCache());
-      },
-    }),
-    [],
-  );
+    const clientStyleContextValue = React.useMemo(
+        () => ({
+            reset() {
+                setCache(createEmotionCache());
+            },
+        }),
+        [],
+    );
 
-  return (
-    <ClientStyleContext.Provider value={clientStyleContextValue}>
-      <CacheProvider value={cache}>{children}</CacheProvider>
-    </ClientStyleContext.Provider>
-  );
+    return (
+        <ClientStyleContext.Provider value={clientStyleContextValue}>
+            <CacheProvider value={cache}>{children}</CacheProvider>
+        </ClientStyleContext.Provider>
+    );
 }
 
 const hydrate = () => {
-  console.log("ENTRY CLIENT STARTET");
-  React.startTransition(() => {
-    ReactDOM.hydrateRoot(
-      document,
-      <ClientCacheProvider>
-        {}
-        <CssBaseline />
-        <RemixBrowser />
-      </ClientCacheProvider>,
-    );
-  });
+    console.log('ENTRY CLIENT STARTET');
+    React.startTransition(() => {
+        ReactDOM.hydrateRoot(
+            document,
+            <ClientCacheProvider>
+                {}
+                <CssBaseline />
+                <RemixBrowser />
+            </ClientCacheProvider>,
+        );
+    });
 };
 
 if (window.requestIdleCallback) {
-  window.requestIdleCallback(hydrate);
+    window.requestIdleCallback(hydrate);
 } else {
-  window.setTimeout(hydrate, 1);
-} 
+    window.setTimeout(hydrate, 1);
+}
