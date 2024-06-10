@@ -5,41 +5,42 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-function CheckboxArt() {
-  
-  const [checkedKindle, setCheckedKindle] = React.useState(true);
+function CheckboxSchlagwörter() {
 
-  const [checkedDruck, setCheckedDruck] = React.useState(true);
+  const [checkedJS, setCheckedJS] = React.useState(true);
 
-  const handleChangeKindle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Checkbox Kindle clicked!");
-    setCheckedKindle(event.target.checked);
+  const [checkedTS, setCheckedTS] = React.useState(true);
+
+  const handleChangeJS = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Checkbox JS clicked!");
+    setCheckedJS(event.target.checked);
   };
 
-  const handleChangeDruck = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Checkbox Druck clicked!");
-    setCheckedDruck(event.target.checked);
+  const handleChangeTS = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Checkbox TS clicked!");
+    setCheckedTS(event.target.checked);
   };
+
   return (
     <>
       <FormGroup>
         <FormControlLabel
           sx={{ display: 'flex', boxSizing: 'border-box' }}
           control={<Checkbox 
-            checked={checkedKindle}
-            onChange={handleChangeKindle}/>}
-          label="Kindle"
+                    checked={checkedJS}
+                    onChange={handleChangeJS}/>}
+          label="Javascript"
         />
         <FormControlLabel
           sx={{ display: 'flex', boxSizing: 'border-box' }}
           control={<Checkbox 
-            checked={checkedDruck}
-            onChange={handleChangeDruck}/>}
-          label="Druckausgabe"
+            checked={checkedTS}
+            onChange={handleChangeTS}/>}
+          label="Typescript"
         />
       </FormGroup>
     </>
   );
 }
 
-export default CheckboxArt;
+export default CheckboxSchlagwörter;
