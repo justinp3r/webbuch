@@ -12,11 +12,17 @@ export default function AlleBuecher({condition}){
       buecher {
         id
         isbn
+        version
+        rating
+        art
         preis
+        lieferbar
+        datum
+        homepage
         schlagwoerter
-        titel {
-          titel
-        }
+            titel {
+              titel
+            }
       }
     }
   `;
@@ -31,7 +37,7 @@ export default function AlleBuecher({condition}){
     <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2} mt={4}>
       {data.buecher.map(({ id, isbn, titel, preis,schlagwoerter }) => (
         <Paper key={id} elevation={3} sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}>
-          <Link to={`/buecher/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to={`${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Typography variant="h6">{titel.titel}</Typography>
             <Typography variant="subtitle1">{schlagwoerter}</Typography>
             <Typography variant="subtitle1">{isbn}</Typography>
