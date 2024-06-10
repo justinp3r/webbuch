@@ -10,14 +10,27 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
-import {Link as RemixLink} from "@remix-run/react";
+import { Link as RemixLink } from "@remix-run/react";
+import { ApolloClient } from "../../node_modules/@apollo/client/core/ApolloClient";
+import { ApolloProvider } from "../../node_modules/@apollo/client/react/context/ApolloProvider";
+import { InMemoryCache } from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
+import { useMutation } from "../../node_modules/@apollo/client/react/hooks/useMutation";
+import {gql} from "../../node_modules/graphql-tag/src/index";
+//https://www.apollographql.com/docs/react/data/mutations
+
+
+
+const client = new ApolloClient({
+  uri: 'https://localhost:3000/graphql',
+  cache: new InMemoryCache(),
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-        Gruppe 6 /
+      Gruppe 6 /
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -27,12 +40,41 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const LOGIN_MUTATION = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      access_token
+      expires_in
+      refresh_token
+      refresh_expires_in
+      roles
+    }
+  }
+`;
+
+    const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
+      variables: {
+        username: "admin",
+        password: "p",
+      },
+      onCompleted: (data) => {
+      console.log('JWT:', data.login.access_token);
+      // Hier kannst du das JWT speichern (z.B. in einer React-Kontext oder im localStorage)
+    },
+    });
+
+    React.useEffect(() => {
+      login();
+    }, [login]);
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const username = data.get('email')?.toString() || '';
+    const password = data.get('password')?.toString() || '';
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: username,
+      password: password,
     });
   };
 
@@ -75,16 +117,14 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <Link to="/" color="secondary" component={RemixLink}>
-                <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                >
-                Anmelden
-                </Button>
-            </Link>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Anmelden
+            </Button>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
