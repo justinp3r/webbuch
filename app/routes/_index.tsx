@@ -1,67 +1,92 @@
-
-import type { MetaFunction } from '@remix-run/node';
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, Container, Box, Card, CardContent, CardActions, FormGroup, Checkbox,FormControlLabel, TextField} from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import BasicSelect from './components/Dropdown';
-import MyComponent from './components/komp';
-import CheckboxLabels from './components/Checkbox';
-import { AppBar, Toolbar, Typography, Button, Box, FormGroup,FormControlLabel, TextField, Checkbox} from '@mui/material';
-import React from 'react';
-import CheckboxSchlagwörter from './components/CheckboxSchlagwörter';
+import { LoaderFunctionArgs, MetaFunction, json, redirect } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
+import Api from "../api";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { useNavigation } from "@remix-run/react";
+import { getSession, commitSession } from "../sessions";
+import { useEffect, useState } from "react";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "Webbuch" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return [{ title: "Login" }];
 };
 
-export default function Index() {
-  
-  return (
-    <>
-        <img src="../../public/open-book.png" height="100" width="100" alt="logo"></img>
-        <p>Willkommen!</p>
-        <TextField
-          label="Suche..."
-          id="outlined-size-small"
-          size="small"
-        />
-        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}}>Suchen</Button>
-        <h4>Buchart</h4>
-        <FormGroup>
-          <FormControlLabel 
-            control={<CheckboxLabels/>} 
-            label="Kindle" />
-          <FormControlLabel 
-            control={<CheckboxLabels/>} 
-            label="Druckausgabe" />
-        </FormGroup>
-        <h4>Schlagwörter</h4>
-        <FormGroup>
-          <FormControlLabel 
-            control={<CheckboxLabels/>} 
-            label="Javascript" />
-          <FormControlLabel 
-            control={<CheckboxLabels/>} 
-            label="Typescript" />
-        </FormGroup>
-      <div>  
-        <Button variant="outlined" size="medium" sx={{ marginLeft: '15px', lineHeight:'2'}} >Suchen</Button>
-        <h4>Buchart</h4>
-        <FormGroup>
-          <FormControlLabel 
-            control={<Checkbox/>} 
-            label="Kindle" />
-          <FormControlLabel 
-            control={<Checkbox/>} 
-            label="Druckausgabe" />
-        </FormGroup>
-        <h4>Schlagwörter</h4>
-        <CheckboxSchlagwörter/>
-    </div>  
-    </React.Fragment>
+export async function loader({ request }: LoaderFunctionArgs) {
+  // get the session
+  const cookie = request.headers.get("cookie");
+  const session = await getSession(cookie);
 
+  // if the user is logged in, redirect them to the dashboard
+  if (session.has("credentials")) {
+    return redirect("/dashboard");
+  } else {
+    return json({ message: "Please login" });
+  }
+}
+
+export async function action({ request }: ActionFunctionArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+  const body = await request.formData();
+  const email = body.get("email");
+  const password = body.get("password");
+  console.log(email);
+  const payload = {
+    email,
+    password,
+  };
+
+  console.log(typeof email);
+
+  const api = new Api();
+  try {
+    const response = await api.loginUser(payload);
+    const sessionPayload = {
+      token: response.data.access_token,
+      user: {
+        email: response.data.user.email,
+        name: response.data.user.name,
+      },
+    };
+    console.log(response.data.access_token);
+    session.set("credentials", sessionPayload);
+    return redirect("/dashboard", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  } catch (error: any) {
+    console.log(error);
+    return json(error, {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+}
+
+export default function Index() {
+  const navigation = useNavigation();
+  const actionData = useActionData();
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (actionData.error) {
+      setError(actionData.error);
+      console.log(actionData);
+    }
+  }, [actionData]);
+
+  return (
+    <div>
+      {/*   */}
+      <h2>Login</h2>
+      <Form method="post" className="flex flex-col">
+        <h2>{error}</h2>
+        <input type="text" placeholder="Email" name="email" />
+        <input type="password" placeholder="Password" name="password" />
+        <button type="submit">
+          {navigation.state === "submitting" ? "Loading..." : "Login"}
+        </button>
+      </Form>
+    </div>
   );
 }
