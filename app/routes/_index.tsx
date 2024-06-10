@@ -18,7 +18,7 @@ const client = new ApolloClient({
 
 console.log("INDEDX")
 
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 client
   .query({
@@ -80,4 +80,3 @@ export default function Index() {
     </>
   );
 } 
-}
