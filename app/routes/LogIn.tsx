@@ -16,14 +16,6 @@ import { ApolloProvider } from "../../node_modules/@apollo/client/react/context/
 import { InMemoryCache } from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
 import { useMutation } from "../../node_modules/@apollo/client/react/hooks/useMutation";
 import {gql} from "../../node_modules/graphql-tag/src/index";
-//https://www.apollographql.com/docs/react/data/mutations
-
-
-
-const client = new ApolloClient({
-  uri: 'https://localhost:3000/graphql',
-  cache: new InMemoryCache(),
-});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
@@ -40,6 +32,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+
   const LOGIN_MUTATION = gql`
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -52,30 +45,32 @@ export default function SignIn() {
   }
 `;
 
-    const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
-      variables: {
-        username: "admin",
-        password: "p",
-      },
-      onCompleted: (data) => {
-      console.log('JWT:', data.login.access_token);
-      // Hier kannst du das JWT speichern (z.B. in einer React-Kontext oder im localStorage)
+  const [login, { data: mutationData, loading, error }] = useMutation(LOGIN_MUTATION, {
+    onError: (err) => {
+      console.log("Anmeldung fehlgeschlagen! Grund: "+err);
     },
-    });
-
-    React.useEffect(() => {
-      login();
-    }, [login]);
+    onCompleted: (data) => {
+      const jwtToken = data.login.access_token;
+      console.log('Login erfolgreich! Token: '+ jwtToken);
+    },
+  });
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const username = data.get('email')?.toString() || '';
-    const password = data.get('password')?.toString() || '';
-    console.log({
-      email: username,
-      password: password,
-    });
+    try{
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const username = data.get('email')?.toString() || '';
+      const password = data.get('password')?.toString() || '';
+      console.log({
+        email: username,
+        password: password,
+      });
+      login({ variables: { username, password } });
+    }
+    catch(err){
+      console.log(err);
+    }
+    
   };
 
   return (

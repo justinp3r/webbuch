@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import {gql} from "../../node_modules/graphql-tag/src/index";
 import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
+import { Link } from "@remix-run/react";
 
 export default function BuchMitID({id}){
     if (id===null){

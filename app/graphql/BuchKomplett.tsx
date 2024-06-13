@@ -39,7 +39,6 @@ export default function BuchKomplett({id}){
             <Typography variant="subtitle1">{data.buch.schlagwoerter}</Typography>
             <Typography variant="subtitle1">{data.buch.isbn}</Typography>
             <Typography variant="subtitle1">{"UVP: "+ data.buch.preis+",-"}</Typography>
-            <Typography variant="subtitle1">{data.buch.rating + "Sterne"}</Typography>
             <Typography variant="subtitle1">{data.buch.lieferbar}</Typography>
             <Typography variant="subtitle1">{data.buch.datum}</Typography>
             <Typography variant="subtitle1">{data.buch.homepage}</Typography>
