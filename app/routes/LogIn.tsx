@@ -10,12 +10,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
-import { Link as RemixLink } from "@remix-run/react";
-import { ApolloClient } from "../../node_modules/@apollo/client/core/ApolloClient";
-import { ApolloProvider } from "../../node_modules/@apollo/client/react/context/ApolloProvider";
-import { InMemoryCache } from "../../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
+import { json, Link as RemixLink, useLoaderData } from "@remix-run/react";
 import { useMutation } from "../../node_modules/@apollo/client/react/hooks/useMutation";
 import {gql} from "../../node_modules/graphql-tag/src/index";
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
@@ -49,9 +47,10 @@ export default function SignIn() {
     onError: (err) => {
       console.log("Anmeldung fehlgeschlagen! Grund: "+err);
     },
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       const jwtToken = data.login.access_token;
-      console.log('Login erfolgreich! Token: '+ jwtToken);
+      console.log('Login erfolgreich! Token: ' + jwtToken);
+      localStorage.setItem('authToken', jwtToken);
     },
   });
   

@@ -24,7 +24,11 @@ const client = new ApolloClient({
 });
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  
   const [searchText, setSearchText] = useState('');
+  const isLoggedIn = typeof window !== 'undefined' && window.localStorage.getItem('authToken');
+
+  console.log("Login Active Token: "+isLoggedIn);
   
   return (
     <html lang="en">
@@ -60,7 +64,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       <Box sx={{ display: 'flex' }}>
                         <Link to="/LogIn" color="secondary" component={RemixLink}>
                         <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
-                        <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Analyse</Button>
                         </Link>
                       </Box>
                   </Toolbar>

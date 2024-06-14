@@ -2,6 +2,7 @@ import {useQuery} from "../../node_modules/@apollo/client/react/hooks/useQuery";
 import {gql} from "../../node_modules/graphql-tag/src/index";
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from "@remix-run/react";
+
 export default function AlleBuecher({condition}){
   
   if (condition ===false){
@@ -28,7 +29,6 @@ export default function AlleBuecher({condition}){
   `;
   
   const { loading, error, data } = useQuery(GET_BUECHER);
-  console.log("| LOAD: "+loading+"| ERROR: "+error+"| DATA: "+data)
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   
