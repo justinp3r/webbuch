@@ -8,12 +8,39 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
-import { json, Link as RemixLink, useLoaderData } from "@remix-run/react";
+import { json, redirect, Link as RemixLink, useActionData, useLoaderData } from "@remix-run/react";
 import { useMutation } from "../../node_modules/@apollo/client/react/hooks/useMutation";
 import {gql} from "../../node_modules/graphql-tag/src/index";
+import { createCookie } from '@remix-run/node';
+import { authToken } from '~/security/cookie.server';
 
+export const loader = async ({ request }: { request: Request }) => {
+  const cookieHeader = request.headers.get("Cookie");
+  const hasUserVisitedPage = await authToken.parse(cookieHeader);
+
+  const message = hasUserVisitedPage
+    ? "Hey, I know you! Welcome back!"
+    : "Hello, I haven't met you before";
+
+  if (hasUserVisitedPage) {
+    return json({ message });
+  }
+
+  return json(
+    { message },
+    {
+      headers: {
+        "Set-Cookie": await authToken.serialize({}),
+      },
+    }
+  );
+};
+
+export async function action({ request }) {
+  return null
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
@@ -27,7 +54,6 @@ function Copyright(props: any) {
   );
 }
 
-const defaultTheme = createTheme();
 
 export default function SignIn() {
 
@@ -50,7 +76,7 @@ export default function SignIn() {
     onCompleted: async (data) => {
       const jwtToken = data.login.access_token;
       console.log('Login erfolgreich! Token: ' + jwtToken);
-      localStorage.setItem('authToken', jwtToken);
+      window.localStorage.setItem('authToken', jwtToken);
     },
   });
   
