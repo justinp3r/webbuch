@@ -29,7 +29,6 @@ function ClientCacheProvider({ children }: ClientCacheProviderProps) {
 }
 
 const hydrate = () => {
-  console.log("ENTRY CLIENT STARTET");
   React.startTransition(() => {
     ReactDOM.hydrateRoot(
       document,

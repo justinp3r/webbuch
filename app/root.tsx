@@ -17,19 +17,40 @@ import SearchButtonHeader from './routes/components/SearchButtonHeader';
 import {ApolloClient} from "../node_modules/@apollo/client/core/ApolloClient"; 
 import {ApolloProvider} from "../node_modules/@apollo/client/react/context/ApolloProvider";
 import {InMemoryCache} from "../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
+import { useNavigate } from "@remix-run/react";
 
 const client = new ApolloClient({
   uri: 'https://localhost:3000/graphql',
   cache: new InMemoryCache(),
 });
 
+function logStatusAuth(){
+    console.log("Login Active Token: " + (typeof window !== 'undefined' && window.localStorage.getItem('authToken')));
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
-  
-  const [searchText, setSearchText] = useState('');
+
+  const navigate = useNavigate();
+
   const isLoggedIn = typeof window !== 'undefined' && window.localStorage.getItem('authToken');
 
-  console.log("Login Active Token: "+isLoggedIn);
+  const [isClicked, setIsClicked] = useState(isLoggedIn ? true : false);
+
+  const [searchText, setSearchText] = useState('');
   
+  const handleLogout = () => {
+    window.localStorage.removeItem("authToken");
+    if(!isClicked)setIsClicked(false)
+    console.log("Du wirst ausgeloggt...")
+    navigate("/");
+  };
+
+  const handleLogin = () => {
+    navigate("/LogIn");
+  };
+
+  logStatusAuth();
+
   return (
     <html lang="en">
     <ApolloProvider client={client}>
@@ -62,9 +83,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       </Link>
                       </Box>
                       <Box sx={{ display: 'flex' }}>
-                        <Link to="/LogIn" color="secondary" component={RemixLink}>
-                        <Button variant="contained" color="secondary" disableElevation sx={{ marginRight: '15px' }}>Login</Button>
-                        </Link>
+                        <Button variant="contained" color="secondary" disabled={false} onClick={handleLogout}  sx={{ marginRight: '15px' }}>Logout</Button>
+                        <Button variant="contained" color="secondary" disabled={false} onClick={handleLogin} sx={{ marginRight: '15px' }}>Login</Button>
+                        <Button variant="contained" color="secondary"disabled={false}  sx={{ marginRight: '15px' }}>+ Hinzufügen</Button>
                       </Box>
                   </Toolbar>
                 </AppBar>
