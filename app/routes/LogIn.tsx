@@ -19,49 +19,7 @@ import {
 } from '@remix-run/react';
 import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation';
 import { gql } from '../../node_modules/graphql-tag/src/index';
-import { authToken } from '~/security/cookie.server';
 
-export const loader = async ({ request }: { request: Request }) => {
-    const cookieHeader = request.headers.get('Cookie');
-    const hasUserVisitedPage = await authToken.parse(cookieHeader);
-
-    const message = hasUserVisitedPage
-        ? 'Hey, I know you! Welcome back!'
-        : "Hello, I haven't met you before";
-
-    if (hasUserVisitedPage) {
-        return json({ message });
-    }
-
-    return json(
-        { message },
-        {
-            headers: {
-                'Set-Cookie': await authToken.serialize({}),
-            },
-        },
-    );
-};
-
-export async function action({ request }) {
-    return null;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function Copyright(props: any) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {'Copyright © '}
-            Gruppe 6 /{new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 export default function SignIn() {
     const LOGIN_MUTATION = gql`
