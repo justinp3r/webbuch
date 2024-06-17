@@ -1,109 +1,174 @@
 // Anleitung: https://www.apollographql.com/docs/react/get-started
 import {
-  Link as RemixLink,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+    Link as RemixLink,
+    Links,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
+} from '@remix-run/react';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
-import React, { useState } from "react";
-import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
+import React, { useState } from 'react';
+import { AppBar, Box, Button, Link, Toolbar, Typography } from '@mui/material';
 import SearchBarHeader from './routes/components/SearchBarHeader';
 import SearchButtonHeader from './routes/components/SearchButtonHeader';
-import {ApolloClient} from "../node_modules/@apollo/client/core/ApolloClient"; 
-import {ApolloProvider} from "../node_modules/@apollo/client/react/context/ApolloProvider";
-import {InMemoryCache} from "../node_modules/@apollo/client/cache/inmemory/inMemoryCache";
-import { useNavigate } from "@remix-run/react";
+import { ApolloClient } from '../node_modules/@apollo/client/core/ApolloClient';
+import { ApolloProvider } from '../node_modules/@apollo/client/react/context/ApolloProvider';
+import { InMemoryCache } from '../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
+import { useNavigate } from '@remix-run/react';
 
 const client = new ApolloClient({
-  uri: 'https://localhost:3000/graphql',
-  cache: new InMemoryCache(),
+    uri: 'https://localhost:3000/graphql',
+    cache: new InMemoryCache(),
 });
 
-function logStatusAuth(){
-    console.log("Login Active Token: " + (typeof window !== 'undefined' && window.localStorage.getItem('authToken')));
+function logStatusAuth() {
+    console.log(
+        'Login Active Token: ' +
+            (typeof window !== 'undefined' &&
+                window.localStorage.getItem('authToken')),
+    );
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const isLoggedIn =
+        typeof window !== 'undefined' &&
+        window.localStorage.getItem('authToken');
 
-  const isLoggedIn = typeof window !== 'undefined' && window.localStorage.getItem('authToken');
+    const [isClicked, setIsClicked] = useState(isLoggedIn ? true : false);
 
-  const [isClicked, setIsClicked] = useState(isLoggedIn ? true : false);
+    const [searchText, setSearchText] = useState('');
 
-  const [searchText, setSearchText] = useState('');
-  
-  const handleLogout = () => {
-    window.localStorage.removeItem("authToken");
-    if(!isClicked)setIsClicked(false)
-    console.log("Du wirst ausgeloggt...")
-    navigate("/");
-  };
+    const handleLogout = () => {
+        window.localStorage.removeItem('authToken');
+        if (!isClicked) setIsClicked(false);
+        console.log('Du wirst ausgeloggt...');
+        navigate('/');
+    };
 
-  const handleLogin = () => {
-    navigate("/LogIn");
-  };
+    const handleLogin = () => {
+        navigate('/LogIn');
+    };
 
-  logStatusAuth();
+    logStatusAuth();
 
-  return (
-    <html lang="en">
-    <ApolloProvider client={client}>
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-      <ThemeProvider theme={theme}>
-        <React.Fragment>
-          <main id="content">
-            <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1' }}>
-              <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="fixed">
-                  <Toolbar>
-                      <Typography 
-                        variant="h6" 
-                        component="div" 
-                        sx={{ flexGrow: 1 }}>
-                        <a href="/" color="primary.light" >
-                        WEBBUCH
-                        </a>
-                      </Typography>
-                      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-                      <SearchBarHeader searchText={searchText} onSearchTextChange={setSearchText} />
-                      <Link to="/SearchResults" color="secondary" component={RemixLink}>
-                        <SearchButtonHeader searchText={searchText} />
-                      </Link>
-                      </Box>
-                      <Box sx={{ display: 'flex' }}>
-                        <Button variant="contained" color="secondary" disabled={false} onClick={handleLogout}  sx={{ marginRight: '15px' }}>Logout</Button>
-                        <Button variant="contained" color="secondary" disabled={false} onClick={handleLogin} sx={{ marginRight: '15px' }}>Login</Button>
-                        <Button variant="contained" color="secondary"disabled={false}  sx={{ marginRight: '15px' }}>+ Hinzufügen</Button>
-                      </Box>
-                  </Toolbar>
-                </AppBar>
-              </Box>
-              <h1>Webbuch</h1>
-            {children}
-            </div>  
-          </main>
-        </React.Fragment>
-      </ThemeProvider>
-      <ScrollRestoration />
-      <Scripts />
-      </body>
-      </ApolloProvider>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <ApolloProvider client={client}>
+                <head>
+                    <meta charSet="utf-8" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1"
+                    />
+                    <Meta />
+                    <Links />
+                </head>
+                <body>
+                    <ThemeProvider theme={theme}>
+                        <React.Fragment>
+                            <main id="content">
+                                <div
+                                    style={{
+                                        fontFamily: 'system-ui, sans-serif',
+                                        lineHeight: '1',
+                                    }}
+                                >
+                                    <Box sx={{ flexGrow: 1 }}>
+                                        <AppBar position="fixed">
+                                            <Toolbar>
+                                                <Typography
+                                                    variant="h6"
+                                                    component="div"
+                                                    sx={{ flexGrow: 1 }}
+                                                >
+                                                    <a
+                                                        href="/"
+                                                        color="primary.light"
+                                                    >
+                                                        WEBBUCH
+                                                    </a>
+                                                </Typography>
+                                                <Box
+                                                    sx={{
+                                                        flexGrow: 1,
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                    }}
+                                                >
+                                                    <SearchBarHeader
+                                                        searchText={searchText}
+                                                        onSearchTextChange={
+                                                            setSearchText
+                                                        }
+                                                    />
+                                                    <Link
+                                                        to="/SearchResults"
+                                                        color="secondary"
+                                                        component={RemixLink}
+                                                    >
+                                                        <SearchButtonHeader
+                                                            searchText={
+                                                                searchText
+                                                            }
+                                                        />
+                                                    </Link>
+                                                </Box>
+                                                <Box sx={{ display: 'flex' }}>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="secondary"
+                                                        disabled={false}
+                                                        onClick={handleLogout}
+                                                        sx={{
+                                                            marginRight: '15px',
+                                                        }}
+                                                    >
+                                                        Logout
+                                                    </Button>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="secondary"
+                                                        disabled={false}
+                                                        onClick={handleLogin}
+                                                        sx={{
+                                                            marginRight: '15px',
+                                                        }}
+                                                    >
+                                                        Login
+                                                    </Button>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="secondary"
+                                                        disabled={false}
+                                                        sx={{
+                                                            marginRight: '15px',
+                                                        }}
+                                                    >
+                                                        + Hinzufügen
+                                                    </Button>
+                                                </Box>
+                                            </Toolbar>
+                                        </AppBar>
+                                    </Box>
+                                    <h1>Webbuch</h1>
+                                    {children}
+                                </div>
+                            </main>
+                        </React.Fragment>
+                    </ThemeProvider>
+                    <ScrollRestoration />
+                    <Scripts />
+                </body>
+            </ApolloProvider>
+        </html>
+    );
 }
 
 export default function App() {
-  return <Outlet />;
+    return <Outlet />;
 }
