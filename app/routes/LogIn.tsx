@@ -20,6 +20,17 @@ import {
 import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      Gruppe 6 /
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 export default function SignIn() {
     const LOGIN_MUTATION = gql`
