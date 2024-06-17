@@ -16,6 +16,7 @@ import {
     Link as RemixLink,
     useActionData,
     useLoaderData,
+    useNavigate,
 } from '@remix-run/react';
 import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation';
 import { gql } from '../../node_modules/graphql-tag/src/index';
@@ -33,6 +34,9 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
+
+    const navigate = useNavigate();
+
     const LOGIN_MUTATION = gql`
         mutation Login($username: String!, $password: String!) {
             login(username: $username, password: $password) {
@@ -70,6 +74,7 @@ export default function SignIn() {
                 password: password,
             });
             login({ variables: { username, password } });
+            navigate('/');
         } catch (err) {
             console.log(err);
         }

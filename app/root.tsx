@@ -18,12 +18,12 @@ import { ApolloClient } from '../node_modules/@apollo/client/core/ApolloClient';
 import { ApolloProvider } from '../node_modules/@apollo/client/react/context/ApolloProvider';
 import { InMemoryCache } from '../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
 import { useNavigate } from '@remix-run/react';
+import { isConstValueNode } from 'graphql';
 
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
 });
-
 function logStatusAuth() {
     console.log(
         'Login Active Token: ' +
@@ -35,7 +35,7 @@ function logStatusAuth() {
 export function Layout({ children }: { children: React.ReactNode }) {
     const navigate = useNavigate();
 
-    const isLoggedIn =
+    let isLoggedIn =
         typeof window !== 'undefined' &&
         window.localStorage.getItem('authToken');
 
@@ -45,7 +45,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
     const handleLogout = () => {
         window.localStorage.removeItem('authToken');
-        if (!isClicked) setIsClicked(false);
+        isLoggedIn=false;
+        setIsClicked(false);
         console.log('Du wirst ausgeloggt...');
         navigate('/');
     };
@@ -54,7 +55,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         navigate('/LogIn');
     };
 
+    const handleHinzufuegen = () => {
+        navigate('/CreateBook');
+    };
+
     logStatusAuth();
+    console.log("Angemeldet? " + isClicked)
 
     return (
         <html lang="en">
@@ -121,7 +127,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                                 <Box sx={{ display: 'flex' }}>
                                                     <Button
                                                         variant="contained"
-                                                        color="secondary"
+                                                        color={"secondary"}
                                                         disabled={false}
                                                         onClick={handleLogout}
                                                         sx={{
@@ -145,6 +151,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                                         variant="contained"
                                                         color="secondary"
                                                         disabled={false}
+                                                        onClick={handleHinzufuegen}
                                                         sx={{
                                                             marginRight: '15px',
                                                         }}
