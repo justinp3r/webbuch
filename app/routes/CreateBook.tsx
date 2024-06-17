@@ -1,3 +1,4 @@
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
 const CreateBook = () => {
@@ -78,145 +79,119 @@ const CreateBook = () => {
     ];
 
     return (
-        <div>
-            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                <img
-                    src="/public/createbook.jpeg"
-                    alt="Buch anlegen"
-                    style={{
-                        width: '120px',
-                        height: '120px',
-                        marginTop: '20px',
-                    }}
-                />
-                <h1 style={{ marginTop: '20px' }}>Buch anlegen</h1>
-            </div>
-            <form
-                onSubmit={handleSubmit}
+        <Box sx={{ textAlign: 'center', marginBottom: '40px' }}>
+            <img
+                src="/public/createbook.jpeg"
+                alt="Buch anlegen"
                 style={{
+                    width: '120px',
+                    height: '120px',
+                    marginTop: '20px',
+                }}
+            />
+            <Typography variant="h4" sx={{ marginTop: '20px' }}>
+                Buch anlegen
+            </Typography>
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}
             >
                 {Object.entries(data).map(([key, value]) => (
-                    <div
-                        key={key}
-                        style={{ marginBottom: '20px', fontSize: '18px' }}
-                    >
-                        <label>
+                    <Box key={key} sx={{ marginBottom: '20px', fontSize: '18px' }}>
+                        <Typography variant="subtitle1">
                             {key === 'isbn'
                                 ? 'ISBN'
                                 : key.charAt(0).toUpperCase() + key.slice(1)}
-                        </label>
+                        </Typography>
                         {key === 'buchart' ? (
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    marginTop: '10px',
-                                }}
-                            >
+                            <FormGroup row sx={{ marginTop: '10px' }}>
                                 {['Kindle', 'Druckausgabe'].map((type) => (
-                                    <label
+                                    <FormControlLabel
                                         key={type}
-                                        style={{ marginRight: '20px' }}
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            name={key}
-                                            value={type}
-                                            checked={value.includes(type)}
-                                            onChange={handleChange}
-                                        />
-                                        {type}
-                                    </label>
-                                ))}
-                            </div>
-                        ) : key === 'verfügbarkeit' ? (
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    marginTop: '10px',
-                                }}
-                            >
-                                {['Verfügbar', 'Nicht verfügbar'].map(
-                                    (status) => (
-                                        <label
-                                            key={status}
-                                            style={{ marginRight: '20px' }}
-                                        >
-                                            <input
-                                                type="radio"
+                                        control={
+                                            <Checkbox
                                                 name={key}
-                                                value={status}
-                                                checked={value === status}
+                                                value={type}
+                                                checked={value.includes(type)}
                                                 onChange={handleChange}
                                             />
-                                            {status}
-                                        </label>
-                                    ),
-                                )}
-                            </div>
+                                        }
+                                        label={type}
+                                        sx={{ marginRight: '20px' }}
+                                    />
+                                ))}
+                            </FormGroup>
+                        ) : key === 'verfügbarkeit' ? (
+                            <RadioGroup
+                                row
+                                name={key}
+                                value={value}
+                                onChange={handleChange}
+                                sx={{ marginTop: '10px' }}
+                            >
+                                {['Verfügbar', 'Nicht verfügbar'].map((status) => (
+                                    <FormControlLabel
+                                        key={status}
+                                        value={status}
+                                        control={<Radio color="secondary" />}
+                                        label={status}
+                                        sx={{ marginRight: '20px' }}
+                                    />
+                                ))}
+                            </RadioGroup>
                         ) : key === 'erscheinungsjahr' ? (
-                            <select
+                            <Select
                                 value={value}
                                 name={key}
                                 onChange={handleChange}
-                                style={{
-                                    display: 'block',
-                                    marginTop: '10px',
-                                    padding: '10px',
-                                    width: '320px',
-                                }}
+                                sx={{ marginTop: '10px', width: '320px' }}
                             >
                                 {years.map((year) => (
-                                    <option key={year} value={year}>
+                                    <MenuItem key={year} value={year}>
                                         {year}
-                                    </option>
+                                    </MenuItem>
                                 ))}
-                            </select>
+                            </Select>
                         ) : key === 'genre' ? (
-                            <select
+                            <Select
                                 value={value}
                                 name={key}
                                 onChange={handleChange}
-                                style={{
-                                    display: 'block',
-                                    marginTop: '10px',
-                                    padding: '10px',
-                                    width: '320px',
-                                }}
+                                sx={{ marginTop: '10px', width: '320px' }}
                             >
                                 {genres.map((genre) => (
-                                    <option key={genre} value={genre}>
+                                    <MenuItem key={genre} value={genre}>
                                         {genre}
-                                    </option>
+                                    </MenuItem>
                                 ))}
-                            </select>
+                            </Select>
                         ) : (
-                            <textarea
+                            <TextField
                                 value={value}
                                 name={key}
                                 onChange={handleChange}
-                                style={{
-                                    display: 'block',
-                                    marginTop: '10px',
-                                    padding: '10px',
-                                    width: '300px',
-                                    height: '100px',
-                                }}
+                                multiline
+                                rows={4}
+                                sx={{ marginTop: '10px', width: '300px' }}
                             />
                         )}
                         {errors[key] && (
-                            <p style={{ color: 'red' }}>{errors[key]}</p>
+                            <Typography variant="caption" color="error">
+                                {errors[key]}
+                            </Typography>
                         )}
-                    </div>
+                    </Box>
                 ))}
-                <button
+                <Button
                     type="submit"
-                    style={{
+                    variant="contained"
+                    color="secondary"
+                    sx={{
                         padding: '10px 20px',
                         fontSize: '16px',
                         cursor: 'pointer',
@@ -225,9 +200,9 @@ const CreateBook = () => {
                     }}
                 >
                     Erstellen
-                </button>
-            </form>
-        </div>
+                </Button>
+            </Box>
+        </Box>
     );
 };
 
