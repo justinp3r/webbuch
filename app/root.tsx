@@ -10,7 +10,7 @@ import {
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Box, Button, Link, Toolbar, Typography } from '@mui/material';
 import SearchBarHeader from './routes/components/SearchBarHeader';
 import SearchButtonHeader from './routes/components/SearchButtonHeader';
@@ -43,6 +43,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
     const [searchText, setSearchText] = useState('');
 
+    let angemeldetBool= isLoggedIn?true:false;
+
+    useEffect(() => {
+        // Seite neu laden, wenn isClicked sich ändert
+        navigate('.', { replace: true });
+      }, [isClicked, navigate]);
+
     const handleLogout = () => {
         window.localStorage.removeItem('authToken');
         isLoggedIn=false;
@@ -60,7 +67,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     };
 
     logStatusAuth();
-    console.log("Angemeldet? " + isClicked)
 
     return (
         <html lang="en">
@@ -150,13 +156,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                                     <Button
                                                         variant="contained"
                                                         color="secondary"
-                                                        disabled={false}
-                                                        onClick={handleHinzufuegen}
+                                                        disabled={false} // Button ist deaktiviert, wenn !isClicked (false)
+                                                        onClick={angemeldetBool ? handleHinzufuegen : handleLogin} // Führt handleHinzufuegen aus, wenn isClicked true ist, sonst handleLogin
                                                         sx={{
                                                             marginRight: '15px',
                                                         }}
-                                                    >
-                                                        + Hinzufügen
+                                                        >
+                                                        + hinzufügen
                                                     </Button>
                                                 </Box>
                                             </Toolbar>

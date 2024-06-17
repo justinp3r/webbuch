@@ -73,8 +73,14 @@ export default function SignIn() {
                 email: username,
                 password: password,
             });
-            login({ variables: { username, password } });
-            navigate('/');
+            const response = await login({ variables: { username, password } });
+            if (response && response.data) {
+              const jwtToken = response.data.login.access_token;
+              console.log('Login erfolgreich! Token: ' + jwtToken);
+              window.localStorage.setItem('authToken', jwtToken);
+              navigate('/', { replace: true }); // Navigiere zur Hauptseite und lade die Seite neu
+            }
+
         } catch (err) {
             console.log(err);
         }
