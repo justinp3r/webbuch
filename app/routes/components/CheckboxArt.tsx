@@ -14,14 +14,12 @@ function CheckboxArt() {
         console.log('Checkbox Kindle clicked!');
         setCheckedKindle(event.target.checked);
         window.localStorage.setItem('checkedKindle', JSON.stringify(checkedKindle));
-
     };
 
     const handleChangeDruck = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Checkbox Druck clicked!');
         setCheckedDruck(event.target.checked);
         window.localStorage.setItem('checkedDruck', JSON.stringify(checkedDruck));
-
     };
     return (
         <>

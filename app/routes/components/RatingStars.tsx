@@ -4,7 +4,6 @@ import { Rating, Box } from '@mui/material';
 export default function RatingStars() {
     const [value, setValue] = React.useState<number | null>(2);
     (typeof window !== 'undefined' && window.localStorage.setItem('rating', JSON.stringify(value)));
-
     return (
         <Box
             sx={{

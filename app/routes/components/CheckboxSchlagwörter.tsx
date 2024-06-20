@@ -20,7 +20,6 @@ function CheckboxSchlagwörter() {
     const handleChangeTS = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedTS(event.target.checked);
         window.localStorage.setItem('checkedTS', JSON.stringify(checkedTS));
-
     };
 
     return (
