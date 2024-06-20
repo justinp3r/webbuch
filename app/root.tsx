@@ -15,15 +15,34 @@ import { AppBar, Box, Button, Link, Toolbar, Typography } from '@mui/material';
 import SearchBarHeader from './routes/components/SearchBarHeader';
 import SearchButtonHeader from './routes/components/SearchButtonHeader';
 import { ApolloClient } from '../node_modules/@apollo/client/core/ApolloClient';
+import { createHttpLink } from '../node_modules/@apollo/client/link/http/createHttpLink';
 import { ApolloProvider } from '../node_modules/@apollo/client/react/context/ApolloProvider';
 import { InMemoryCache } from '../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
 import { useNavigate } from '@remix-run/react';
 import { isConstValueNode } from 'graphql';
+import { setContext } from '../node_modules/@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+    uri: 'https://localhost:3000/graphql',
+  });
+
+const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token = window.localStorage.getItem('authToken');
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      }
+    }
+  });
 
 const client = new ApolloClient({
-    uri: 'https://localhost:3000/graphql',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
+
 function logStatusAuth() {
     console.log(
         'Login Active Token: ' +
