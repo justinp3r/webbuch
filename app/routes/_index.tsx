@@ -11,6 +11,7 @@ import RatingStars from './components/RatingStars';
 import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
 import { Button } from '@mui/material';
+import FilterButtonHeader from './components/FilterButtonHeader';
 
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
@@ -67,11 +68,7 @@ export default function Index() {
                     <CheckboxSchlagwörter />
                     <h4>Bewertungen</h4>
                     <RatingStars></RatingStars>
-                    <Box sx={{ marginTop: '1rem' }}>
-                        <Button variant="outlined" color="primary">
-                            Filter los
-                        </Button>
-                    </Box>
+                    <FilterButtonHeader></FilterButtonHeader>
                 </Box>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
                     <ApolloProvider client={client}>
