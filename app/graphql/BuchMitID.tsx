@@ -27,7 +27,7 @@ export default function BuchMitID({ id }) {
 
     if (loading) return null;
     if (error) return `Error! ${error}`;
-
+    const path = "/" + id;
     return (
         <Box
             display="flex"
@@ -41,14 +41,19 @@ export default function BuchMitID({ id }) {
                 elevation={3}
                 sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}
             >
-                <Typography variant="h6">{data.buch.titel.titel}</Typography>
-                <Typography variant="subtitle1">
-                    {data.buch.schlagwoerter}
-                </Typography>
-                <Typography variant="subtitle1">{data.buch.isbn}</Typography>
-                <Typography variant="subtitle1">
-                    {'UVP: ' + data.buch.preis + ',-'}
-                </Typography>
+                <Link
+                        to={path}
+                        style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                    <Typography variant="h6">{data.buch.titel.titel}</Typography>
+                    <Typography variant="subtitle1">
+                        {data.buch.schlagwoerter}
+                    </Typography>
+                    <Typography variant="subtitle1">{data.buch.isbn}</Typography>
+                    <Typography variant="subtitle1">
+                        {'UVP: ' + data.buch.preis + ',-'}
+                    </Typography>
+                </Link>
             </Paper>
         </Box>
     );
