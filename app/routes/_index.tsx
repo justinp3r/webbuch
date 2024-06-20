@@ -68,7 +68,6 @@ export default function Index() {
                     <CheckboxSchlagwörter />
                     <h4>Bewertungen</h4>
                     <RatingStars></RatingStars>
-                    <FilterButtonHeader></FilterButtonHeader>
                 </Box>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
                     <ApolloProvider client={client}>

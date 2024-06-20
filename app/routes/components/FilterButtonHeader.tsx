@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import {
     getSucheAlleBuecher,
     setSucheAlleBuecher,
@@ -23,14 +23,14 @@ export default function FilterButtonHeader() {
     };
 
     return (
-        <Button
-            variant="contained"
-            size="medium"
-            color="secondary"
-            sx={{ marginLeft: '15px' }}
-            onClick={handleClick}
-        >
-            Filter los
-        </Button>
+            <Button
+                variant="contained"
+                size="medium"
+                color="secondary"
+                sx={{ marginLeft: '20px' }}
+                onClick={handleClick}
+            >
+                Filter los
+            </Button>
     );
 }

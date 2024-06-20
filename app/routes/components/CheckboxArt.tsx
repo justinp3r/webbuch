@@ -5,9 +5,11 @@ function CheckboxArt() {
     const [checkedKindle, setCheckedKindle] = React.useState(true);
 
     const [checkedDruck, setCheckedDruck] = React.useState(true);
+    const checkWindow = typeof window !== 'undefined';
 
-    (typeof window !== 'undefined' && window.localStorage.setItem('checkedDruck', JSON.stringify(checkedDruck)));
-    (typeof window !== 'undefined' && window.localStorage.setItem('checkedKindle', JSON.stringify(checkedKindle)));
+
+    (checkWindow && window.localStorage.setItem('checkedDruck', JSON.stringify(checkedDruck)));
+    (checkWindow && window.localStorage.setItem('checkedKindle', JSON.stringify(checkedKindle)));
 
 
     const handleChangeKindle = (event: React.ChangeEvent<HTMLInputElement>) => {

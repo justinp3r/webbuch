@@ -4,9 +4,7 @@ import CheckboxArt from './components/CheckboxArt';
 import { ApolloClient } from '../../node_modules/@apollo/client/core/ApolloClient';
 import { ApolloProvider } from '../../node_modules/@apollo/client/react/context/ApolloProvider';
 import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
-import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
-import { gql } from '../../node_modules/graphql-tag/src/index';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import BuchMitFilter from '~/graphql/BuchMitFilter';
 
@@ -53,7 +51,7 @@ export default function Index() {
                     <h4>Bewertungen</h4>
                     <RatingStars></RatingStars>
                 </Box>
-
+                    <BuchMitFilter></BuchMitFilter>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
 
                 </Box>

@@ -21,6 +21,7 @@ import { InMemoryCache } from '../node_modules/@apollo/client/cache/inmemory/inM
 import { useNavigate } from '@remix-run/react';
 import { isConstValueNode } from 'graphql';
 import { setContext } from '../node_modules/@apollo/client/link/context';
+import FilterButtonHeader from './routes/components/FilterButtonHeader';
 
 const httpLink = createHttpLink({
     uri: 'https://localhost:3000/graphql',
@@ -147,6 +148,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                                                 searchText
                                                             }
                                                         />
+                                                    </Link>
+                                                    <Link
+                                                        to="/FilterResults"
+                                                        color="secondary"
+                                                        component={RemixLink}
+                                                     >
+                                                        <FilterButtonHeader></FilterButtonHeader>
                                                     </Link>
                                                 </Box>
                                                 <Box sx={{ display: 'flex' }}>
