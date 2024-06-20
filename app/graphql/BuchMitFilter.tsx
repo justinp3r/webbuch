@@ -21,7 +21,7 @@ export default function BuchMitFilter() {
 
     useEffect(() => {
         const checkWindow = typeof window !== 'undefined';
-        const ratingStorage = Number(checkWindow ? (window.localStorage.getItem('rating') || '2') : '2');
+        const ratingStorage = Number(checkWindow && window.localStorage.getItem('rating'));
         const checkedJS = checkWindow && window.localStorage.getItem('checkedJS') === 'true';
         const checkedTS = checkWindow && window.localStorage.getItem('checkedTS') === 'true';
         const art = checkWindow && window.localStorage.getItem('checkedKindle') === 'true' ? "KINDLE" : "DRUCKAUSGABE";

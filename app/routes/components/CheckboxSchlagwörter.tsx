@@ -7,9 +7,10 @@ function CheckboxSchlagwörter() {
     const [checkedTS, setCheckedTS] = React.useState(
         /*JSON.parse(window.localStorage.getItem('checkedTS') || 'true')*/ true
     );
+    const checkWindow = typeof window !== 'undefined';
 
-    (typeof window !== 'undefined' && window.localStorage.setItem('checkedJS', JSON.stringify(checkedJS)));
-    (typeof window !== 'undefined' && window.localStorage.setItem('checkedTS', JSON.stringify(checkedTS)));
+    (checkWindow && window.localStorage.setItem('checkedJS', JSON.stringify(checkedJS)));
+    (checkWindow && window.localStorage.setItem('checkedTS', JSON.stringify(checkedTS)));
 
     const handleChangeJS = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedJS(event.target.checked);
