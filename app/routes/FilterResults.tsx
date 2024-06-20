@@ -8,10 +8,7 @@ import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { Box, Paper, Typography } from '@mui/material';
 import RatingStars from './components/RatingStars';
-import AlleBuecher from '~/graphql/AlleBuecher';
-import BuchMitID from '~/graphql/BuchMitID';
-import { Button } from '@mui/material';
-import FilterButtonHeader from './components/FilterButtonHeader';
+import BuchMitFilter from '~/graphql/BuchMitFilter';
 
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
@@ -26,19 +23,6 @@ export const meta: MetaFunction = () => {
         { title: 'Webbuch' },
         { name: 'description', content: 'Welcome to our Semesterproject!' },
     ];
-};
-
-let sucheBuchID: string | null = null;
-let sucheAlleBuecher = true;
-
-export const getSucheBuchID = () => sucheBuchID;
-export const setSucheBuchID = (newValue: string) => {
-    sucheBuchID = newValue;
-};
-
-export const getSucheAlleBuecher = () => sucheAlleBuecher;
-export const setSucheAlleBuecher = (newValue: boolean) => {
-    sucheAlleBuecher = newValue;
 };
 
 export default function Index() {
@@ -68,13 +52,10 @@ export default function Index() {
                     <CheckboxSchlagwörter />
                     <h4>Bewertungen</h4>
                     <RatingStars></RatingStars>
-                    <FilterButtonHeader></FilterButtonHeader>
                 </Box>
+
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
-                    <ApolloProvider client={client}>
-                        <AlleBuecher condition={sucheAlleBuecher} />
-                        <BuchMitID id={sucheBuchID}></BuchMitID>
-                    </ApolloProvider>
+
                 </Box>
             </Box>
         </>
