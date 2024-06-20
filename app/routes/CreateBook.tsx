@@ -1,209 +1,334 @@
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { Box, TextField, Button, RadioGroup, FormControlLabel, Radio, Checkbox, FormControl, FormLabel, Rating, Select, MenuItem } from '@mui/material';
+import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation';
+import { gql } from '../../node_modules/graphql-tag/src/index';
+
+const CREATE_BOOK_MUTATION = gql`
+  mutation CreateBook(
+    $isbn: String!
+    $rating: Int!
+    $preis: Float!
+    $rabatt: Float!
+    $lieferbar: Boolean!
+    $datum: String!
+    $homepage: String!
+    $schlagwoerter: [String!]!
+    $titel: TitelInput!
+    $abbildungen: [AbbildungInput!]!
+  ) {
+    create(
+      input: {
+        isbn: $isbn
+        rating: $rating
+        preis: $preis
+        rabatt: $rabatt
+        lieferbar: $lieferbar
+        datum: $datum
+        homepage: $homepage
+        schlagwoerter: $schlagwoerter
+        titel: $titel
+        abbildungen: $abbildungen
+      }
+    ) {
+      id
+    }
+  }
+`;
+
 
 const CreateBook = () => {
-    const [data, setData] = useState({
-        titel: '',
-        autor: '',
-        beschreibung: '',
-        genre: 'Horror',
-        erscheinungsjahr: '2024',
-        isbn: '',
-        buchart: [],
-        verfügbarkeit: 'Verfügbar',
-    });
 
-    const [errors, setErrors] = useState({});
+  const [createBook, { data, loading,error1 }] = useMutation(CREATE_BOOK_MUTATION, {
+    onError:(err)=>{
+        console.log("Fehler!: "+err);
+    }  });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setData((prev) => ({
-            ...prev,
-            [name]:
-                type === 'checkbox'
-                    ? checked
-                        ? [...prev[name], value]
-                        : prev[name].filter((type) => type !== value)
-                    : value,
-        }));
-    };
+  const [isbn, setIsbn] = useState('');
+  const [rating, setRating] = useState(0);
+  const [art, setArt] = useState('KINDLE');
+  const [preis, setPreis] = useState('');
+  const [rabatt, setRabatt] = useState('');
+  const [lieferbar, setLieferbar] = useState(false);
+  const [datum, setDatum] = useState('');
+  const [homepage, setHomepage] = useState('');
+  const [schlagwoerter, setSchlagwoerter] = useState([]);
+  const [titel, setTitel] = useState({ titel: '', untertitel: '' });
+  const [abbildungen, setAbbildungen] = useState([{ beschriftung: '', contentType: '' }]);
+  const [Error0, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-    const isValidISBN = (isbn) => {
-        if (!isbn) return false;
-        const cleaned = isbn.replace(/[\s-]+/g, '');
-        if (cleaned.length !== 10 && cleaned.length !== 13) return false;
-        if (!/^\d+$/.test(cleaned)) return false;
-        if (cleaned.length === 10) {
-            let checksum = 0;
-            for (let i = 0; i < 9; i++)
-                checksum += parseInt(cleaned[i]) * (10 - i);
-            const last = cleaned[9].toUpperCase();
-            checksum += last === 'X' ? 10 : parseInt(last);
-            return checksum % 11 === 0;
-        }
-        if (cleaned.length === 13) {
-            let checksum = 0;
-            for (let i = 0; i < 12; i++)
-                checksum += parseInt(cleaned[i]) * (i % 2 === 0 ? 1 : 3);
-            const last = parseInt(cleaned[12]);
-            return (10 - (checksum % 10)) % 10 === last;
-        }
-        return false;
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const errors = {};
-        const { titel, autor, beschreibung, buchart, isbn } = data;
-        if (!titel.trim()) errors.titel = 'Titel ist erforderlich.';
-        if (!autor.trim()) errors.autor = 'Autor ist erforderlich.';
-        if (!beschreibung.trim())
-            errors.beschreibung = 'Beschreibung ist erforderlich.';
-        if (buchart.length === 0)
-            errors.buchart = 'Mindestens eine Buchart muss ausgewählt werden.';
-        if (!isValidISBN(isbn)) errors.isbn = 'Ungültige ISBN-Nummer.';
-        setErrors(errors);
-        if (Object.keys(errors).length === 0) {
-            console.log('Formulardaten:', data);
-            // Füge hier den Code zum Erstellen des Buchs hinzu
-        }
-    };
-
-    const years = Array.from({ length: 2024 - 1455 + 1 }, (_, i) => 1455 + i);
-    const genres = [
-        'Horror',
-        'Romantik',
-        'Science-Fiction',
-        'Fantasy',
-        'Thriller',
-    ];
-
-    return (
-        <Box sx={{ textAlign: 'center', marginBottom: '40px' }}>
-            <img
-                src="/public/createbook.jpeg"
-                alt="Buch anlegen"
-                style={{
-                    width: '120px',
-                    height: '120px',
-                    marginTop: '20px',
-                }}
-            />
-            <Typography variant="h4" sx={{ marginTop: '20px' }}>
-                Buch anlegen
-            </Typography>
-            <Box
-                component="form"
-                onSubmit={handleSubmit}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                {Object.entries(data).map(([key, value]) => (
-                    <Box key={key} sx={{ marginBottom: '20px', fontSize: '18px' }}>
-                        <Typography variant="subtitle1">
-                            {key === 'isbn'
-                                ? 'ISBN'
-                                : key.charAt(0).toUpperCase() + key.slice(1)}
-                        </Typography>
-                        {key === 'buchart' ? (
-                            <FormGroup row sx={{ marginTop: '10px' }}>
-                                {['Kindle', 'Druckausgabe'].map((type) => (
-                                    <FormControlLabel
-                                        key={type}
-                                        control={
-                                            <Checkbox
-                                                name={key}
-                                                value={type}
-                                                checked={value.includes(type)}
-                                                onChange={handleChange}
-                                            />
-                                        }
-                                        label={type}
-                                        sx={{ marginRight: '20px' }}
-                                    />
-                                ))}
-                            </FormGroup>
-                        ) : key === 'verfügbarkeit' ? (
-                            <RadioGroup
-                                row
-                                name={key}
-                                value={value}
-                                onChange={handleChange}
-                                sx={{ marginTop: '10px' }}
-                            >
-                                {['Verfügbar', 'Nicht verfügbar'].map((status) => (
-                                    <FormControlLabel
-                                        key={status}
-                                        value={status}
-                                        control={<Radio color="secondary" />}
-                                        label={status}
-                                        sx={{ marginRight: '20px' }}
-                                    />
-                                ))}
-                            </RadioGroup>
-                        ) : key === 'erscheinungsjahr' ? (
-                            <Select
-                                value={value}
-                                name={key}
-                                onChange={handleChange}
-                                sx={{ marginTop: '10px', width: '320px' }}
-                            >
-                                {years.map((year) => (
-                                    <MenuItem key={year} value={year}>
-                                        {year}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        ) : key === 'genre' ? (
-                            <Select
-                                value={value}
-                                name={key}
-                                onChange={handleChange}
-                                sx={{ marginTop: '10px', width: '320px' }}
-                            >
-                                {genres.map((genre) => (
-                                    <MenuItem key={genre} value={genre}>
-                                        {genre}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        ) : (
-                            <TextField
-                                value={value}
-                                name={key}
-                                onChange={handleChange}
-                                multiline
-                                rows={4}
-                                sx={{ marginTop: '10px', width: '300px' }}
-                            />
-                        )}
-                        {errors[key] && (
-                            <Typography variant="caption" color="error">
-                                {errors[key]}
-                            </Typography>
-                        )}
-                    </Box>
-                ))}
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                        padding: '10px 20px',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                        marginTop: '20px',
-                        marginBottom: '40px',
-                    }}
-                >
-                    Erstellen
-                </Button>
-            </Box>
-        </Box>
+  const handleSchlagwoerterChange = (event) => {
+    const value = event.target.value;
+    setSchlagwoerter((prev) =>
+      event.target.checked ? [...prev, value] : prev.filter((item) => item !== value)
     );
+  };
+
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    setError('');
+    setSuccess('');
+
+    // Validierungen
+    if (!/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1,7}$/.test(isbn)) {
+      setError('ISBN muss gültig sein.');
+      return;
+    }
+    if (rating === 0) {
+      setError('Rating muss ausgewählt werden.');
+      return;
+    }
+    if (!rabatt) {
+      setError('Rabatt muss ausgewählt werden.');
+      return;
+    }
+    if (isNaN(preis) || preis <= 0) {
+      setError('Preis muss eine positive Zahl sein.');
+      return;
+    }
+    if (isNaN(rabatt) || rabatt < 0 || rabatt > 1) {
+      setError('Rabatt muss eine Zahl zwischen 0.00 und 1.00 sein.');
+      return;
+    }
+    if (!datum) {
+      setError('Datum muss ausgewählt werden.');
+      return;
+    }
+    if (!homepage) {
+      setError('Homepage darf nicht leer sein.');
+      return;
+    }
+    if (!titel.titel || !titel.untertitel) {
+      setError('Titel und Untertitel dürfen nicht leer sein.');
+      return;
+    }
+    if (!abbildungen[0].beschriftung || !abbildungen[0].contentType) {
+      setError('Beschriftung und Content Type der Abbildungen dürfen nicht leer sein.');
+      return;
+    }
+
+    console.log({
+        isbn,
+            rating,
+            preis,
+            rabatt,
+            lieferbar,
+            datum,
+            homepage,
+            schlagwoerter,
+            titel: {
+              titel: titel.titel,
+              untertitel: titel.untertitel,
+            },
+            abbildungen: [
+              {
+                beschriftung: abbildungen[0].beschriftung,
+                contentType: abbildungen[0].contentType,
+              },
+            ],
+      });
+
+      try {
+        const { data } = await createBook({
+          variables: {
+            isbn,
+            rating,
+            preis: parseFloat(preis), // Konvertiere preis zu Float
+            rabatt: parseFloat(rabatt), // Konvertiere rabatt zu Float
+            lieferbar,
+            datum,
+            homepage,
+            schlagwoerter,
+            titel: {
+              titel: titel.titel,
+              untertitel: titel.untertitel,
+            },
+            abbildungen: [
+              {
+                beschriftung: abbildungen[0].beschriftung,
+                contentType: abbildungen[0].contentType,
+              },
+            ],
+          },
+        });
+        
+        if (data && data.create) {
+          setSuccess('Buch erfolgreich angelegt!');
+          console.log('Neues Buch angelegt mit ID:', data.create.id);
+        } else {
+          setError('Fehler beim Anlegen des Buches: '+error1);
+        }
+      } catch (err) {
+        console.error('Fehler beim Anlegen des Buches:', err);
+        setError('Fehler beim Anlegen des Buches.');
+      }
+
+    
+  };
+
+  return (
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        mx: 'auto',
+        maxWidth: 500,
+        mt: 5
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+        <h1>Buch hinzufügen</h1>
+        <img src="public/CreateBook.jpeg" alt="Create Book" style={{ width: '120px', height: '120px', marginLeft: '20px' }} />
+      </Box>
+      <TextField
+        label="ISBN"
+        value={isbn}
+        onChange={(e) => setIsbn(e.target.value)}
+        fullWidth
+        margin="normal"
+        required
+      />
+      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', my: 2 }}>
+        <FormLabel component="legend">Rating</FormLabel>
+        <Rating
+          name="rating"
+          value={rating}
+          onChange={(e, newValue) => setRating(newValue)}
+          required
+        />
+      </Box>
+      <FormControl component="fieldset" margin="normal" fullWidth>
+        <FormLabel component="legend">Art</FormLabel>
+        <RadioGroup
+          row
+          value={art}
+          onChange={(e) => setArt(e.target.value)}
+        >
+          <FormControlLabel value="KINDLE" control={<Radio />} label="KINDLE" />
+          <FormControlLabel value="DRUCKAUSGABE" control={<Radio />} label="DRUCKAUSGABE" />
+        </RadioGroup>
+      </FormControl>
+      <TextField
+        label="Preis"
+        value={preis}
+        onChange={(e) => setPreis(e.target.value)}
+        fullWidth
+        margin="normal"
+        required
+      />
+      <FormControl fullWidth margin="normal">
+        <FormLabel>Rabatt</FormLabel>
+        <Select
+          value={rabatt}
+          onChange={(e) => setRabatt(e.target.value)}
+          displayEmpty
+          required
+        >
+          {[...Array(101).keys()].map((value) => (
+            <MenuItem key={value} value={(value / 100).toFixed(2)}>
+              {(value / 100).toFixed(2)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl component="fieldset" margin="normal" fullWidth>
+        <FormLabel component="legend">Lieferbar</FormLabel>
+        <FormControlLabel
+          control={<Checkbox checked={lieferbar} onChange={(e) => setLieferbar(e.target.checked)} />}
+          label="Ja"
+        />
+      </FormControl>
+      <TextField
+        label="Datum"
+        type="date"
+        value={datum}
+        onChange={(e) => setDatum(e.target.value)}
+        fullWidth
+        margin="normal"
+        InputLabelProps={{ shrink: true }}
+        required
+      />
+      <TextField
+        label="Homepage"
+        value={homepage}
+        onChange={(e) => setHomepage(e.target.value)}
+        fullWidth
+        margin="normal"
+        required
+      />
+      <FormControl component="fieldset" margin="normal" fullWidth>
+        <FormLabel component="legend">Schlagwoerter</FormLabel>
+        <FormControlLabel
+          control={
+            <Checkbox
+              value="JAVASCRIPT"
+              checked={schlagwoerter.includes('JAVASCRIPT')}
+              onChange={handleSchlagwoerterChange}
+            />
+          }
+          label="JAVASCRIPT"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              value="TYPESCRIPT"
+              checked={schlagwoerter.includes('TYPESCRIPT')}
+              onChange={handleSchlagwoerterChange}
+            />
+          }
+          label="TYPESCRIPT"
+        />
+      </FormControl>
+      <TextField
+        label="Titel"
+        value={titel.titel}
+        onChange={(e) => setTitel({ ...titel, titel: e.target.value })}
+        fullWidth
+        margin="normal"
+        required
+      />
+      <TextField
+        label="Untertitel"
+        value={titel.untertitel}
+        onChange={(e) => setTitel({ ...titel, untertitel: e.target.value })}
+        fullWidth
+        margin="normal"
+        required
+      />
+      <TextField
+        label="Beschriftung"
+        value={abbildungen[0].beschriftung}
+        onChange={(e) => setAbbildungen([{ ...abbildungen[0], beschriftung: e.target.value }])}
+        fullWidth
+        margin="normal"
+        required
+      />
+      <TextField
+        label="Content Type"
+        value={abbildungen[0].contentType}
+        onChange={(e) => setAbbildungen([{ ...abbildungen[0], contentType: e.target.value }])}
+        fullWidth
+        margin="normal"
+        required
+      />
+      {Error0 && (
+        <Box sx={{ color: 'red', mt: 2 }}>
+          {Error0}
+        </Box>
+      )}
+      {success && (
+        <Box sx={{ color: 'green', mt: 2 }}>
+          {success}
+        </Box>
+      )}
+      <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 3, mb: 5 }}>
+        HINZUFÜGEN
+      </Button>
+    </Box>
+  );
 };
 
 export default CreateBook;
