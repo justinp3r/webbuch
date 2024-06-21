@@ -9,18 +9,19 @@ function CheckboxSchlagwörter() {
     );
     const checkWindow = typeof window !== 'undefined';
 
-    (checkWindow && window.localStorage.setItem('checkedJS', JSON.stringify(checkedJS)));
-    (checkWindow && window.localStorage.setItem('checkedTS', JSON.stringify(checkedTS)));
+
 
     const handleChangeJS = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedJS(event.target.checked);
-        window.localStorage.setItem('checkedJS', JSON.stringify(checkedJS));
-
+        window.localStorage.setItem('checkedJS', JSON.stringify(!checkedJS));
+        console.log("JS" +  window.localStorage.getItem('checkedJS'));
+        
     };
 
     const handleChangeTS = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedTS(event.target.checked);
-        window.localStorage.setItem('checkedTS', JSON.stringify(checkedTS));
+        window.localStorage.setItem('checkedTS', JSON.stringify(!checkedTS));
+        console.log("TS" + window.localStorage.getItem('checkedTS'));
     };
 
     return (

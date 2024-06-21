@@ -1,4 +1,4 @@
-import { Button, Link } from '@mui/material';
+import { Button } from '@mui/material';
 import {
     getSucheAlleBuecher,
     setSucheAlleBuecher,
@@ -12,12 +12,11 @@ export default function FilterButtonHeader() {
     const handleClick = () => {
         console.log(
             'Status: ' +
-                (typeof window !== 'undefined' &&
-                    window.localStorage.getItem('checkedJS')),
+                    window.localStorage.getItem('checkedKindle'),
+                    window.localStorage.getItem('checkedDruck'),
+                    window.localStorage.getItem('checkedJS'),
                     window.localStorage.getItem('checkedTS'),
                     window.localStorage.getItem('rating'),
-                    window.localStorage.getItem('checkedKindle'),
-                    window.localStorage.getItem('checkedDruck')
         );
 
     };

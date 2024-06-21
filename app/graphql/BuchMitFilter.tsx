@@ -69,7 +69,7 @@ export default function BuchMitFilter() {
         variables: queryVariables,
         skip: !filterVars.rating && !filterVars.art
     });
-
+    console.log(queryVariables,queryVariables.schlagwoerter);
     if (loading) return null;
     if (error) return `Error! ${error}`;
     return (
