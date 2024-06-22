@@ -76,7 +76,7 @@ export default function SignIn() {
             const response = await login({ variables: { username, password } });
             if (response && response.data) {
               const jwtToken = response.data.login.access_token;
-              console.log('Login erfolgreich! Token: ' + jwtToken);
+              //console.log('Login erfolgreich! Token: ' + jwtToken);
               window.localStorage.setItem('authToken', jwtToken);
               navigate('/', { replace: true }); // Navigiere zur Hauptseite und lade die Seite neu
             }

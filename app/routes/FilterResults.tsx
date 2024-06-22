@@ -51,7 +51,7 @@ export default function Index() {
                 </Box>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
                 <ApolloProvider client={client}>
-                        <BuchMitFilter art={"DRUCKAUSGABE"} schlagwort={"KINDLE"} rating={4}></BuchMitFilter>
+                        <BuchMitFilter></BuchMitFilter>
                     </ApolloProvider>
                 </Box>
             </Box>

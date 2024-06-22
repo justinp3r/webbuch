@@ -2,15 +2,17 @@ import { Box, Paper, Typography } from '@mui/material';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 import { Link } from '@remix-run/react';
-import BuchMitFilter2 from './BuchMitFilter2';
 
-export default function BuchMitFilter() {
+export default function BuchMitFilter2() {
 
-    const art =  (typeof window !== 'undefined' && window.localStorage.getItem('checkedKindle')) === "true" ? "KINDLE": "DRUCKAUSGABE";
+    const schlagwoerter: string[] = []; 
+    (typeof window !== 'undefined' && window.localStorage.getItem('checkedJS')) === "true" && schlagwoerter.push("JAVASCRIPT");
+    (typeof window !== 'undefined' && window.localStorage.getItem('checkedTS')) === "true" && schlagwoerter.push("TYPESCRIPT");
+    console.log("DAS sind die SCHLAAAGwoooeerter: " + schlagwoerter.length + (schlagwoerter.length > 0) && schlagwoerter[0] + " " + (schlagwoerter.length > 1) && schlagwoerter[1] );
     
-    const FILTER_BOOKS_ART = gql`    
-        query ($art: Art = KINDLE)  {
-        buecher(suchkriterien: {art: $art}) {
+    const FILTER_BOOKS_SCHLAG = gql`    
+        query ($art: Art = KINDLE, $schlagwoerter: [String!])  {
+        buecher(suchkriterien: {schlagwoerter: $schlagwoerter}) {
             id
             art
             isbn
@@ -21,8 +23,8 @@ export default function BuchMitFilter() {
         }
     }
     `;
-    const { loading, error, data } = useQuery(FILTER_BOOKS_ART, {
-        variables: { art },
+    const { loading, error, data } = useQuery(FILTER_BOOKS_SCHLAG, {
+        variables: { schlagwoerter },
     });
     if (loading) return null;
     if (error) return `Error! ${error}`;
