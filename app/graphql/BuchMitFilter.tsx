@@ -2,36 +2,75 @@ import { Box, Paper, Typography } from '@mui/material';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 import { Link } from '@remix-run/react';
-import { useMutation } from '@apollo/client';
+import BuchMitFilter2 from './BuchMitFilter2';
+import BuchMitFilterRating from './BuchMitFilterRating';
+import { useMemo } from 'react';
+
+const removeDuplicates = (books) => {
+    const uniqueBooks = new Map();
+    books.forEach(book => {
+      if (!uniqueBooks.has(book.id)) {
+        uniqueBooks.set(book.id, book);
+      }
+    });
+    return Array.from(uniqueBooks.values());
+  };
+
 
 export default function BuchMitFilter() {
-const rating = window.localStorage.getItem('rating');
-const schlagworte = [window.localStorage.getItem('checkedJS'), window.localStorage.getItem('checkedTS')];
-const art = window.localStorage.getItem('checkedKindle') === 'true' ? "KINDLE" : "DRUCKAUSGABE";
 
-const FILTER_BOOKS = gql`
-query BUCH($rating: number!,$schlagworte: string[], $art: string) {
-    buch(rating: $rating, schlagwoerter: $schlagworte art: $art) {
-        id
-        isbn
-        preis
-        rating
-        schlagwoerter
-        art
-        titel {
-            titel
+    const art =  (typeof window !== 'undefined' && window.localStorage.getItem('checkedKindle')) === "true" ? "KINDLE": (typeof window !== 'undefined' && window.localStorage.getItem('checkedDruck') === "true")?"DRUCKAUSGABE" :null;
+    let rating: number = Number((typeof window !== 'undefined' && window.localStorage.getItem('rating')));
+    rating = isNaN(rating)? 10: rating;
+    console.log("rating: " + rating + " art: " + art);
+
+    const FILTER_BOOKS_ART = gql`    
+
+        query ($art: Art = KINDLE)  {
+            buecher(suchkriterien: {art: $art}) {
+                id
+                art
+                isbn
+                preis
+                titel {
+                    titel
+                }
+            }
+        }
+    `;
+        const { loading: loadingArt, error: errorArt, data: dataArt } = useQuery(FILTER_BOOKS_ART, {
+            variables: { art },
+            skip: art === null,
+        });
+    const FILTER_BOOKS_RATING = gql`    
+    query ($rating: Int = 4)  {
+        buecher(suchkriterien: {rating: $rating}) {
+            id
+            art
+            isbn
+            preis
+            titel {
+                titel
+            }
         }
     }
-}
 `;
-
-const { loading, error, data } = useQuery(FILTER_BOOKS, {
-variables: { rating, schlagworte, art},
+const { loading: loadingRating, error: errorRating, data: dataRating } = useQuery(FILTER_BOOKS_RATING, {
+    variables: { rating },
+    skip: rating === 10,
 });
 
 
-    if (loading) return null;
-    if (error) return `Error! ${error}`;
+const uniqueBooks = useMemo(() => {
+    const ratingBooks = dataRating?.buecher || [];
+    const artBooks = dataArt?.buecher || [];
+    const allBooks = [...ratingBooks, ...artBooks];
+    return removeDuplicates(allBooks);
+  }, [dataRating, dataArt]);
+
+  if (loadingRating || loadingArt) return <p>Loading...</p>;
+  if (errorRating) return <p>Error in rating query: {errorRating.message}</p>;
+  if (errorArt) return <p>Error in art query: {errorArt.message}</p>;
 
     return (
         <Box
@@ -41,20 +80,27 @@ variables: { rating, schlagworte, art},
             gap={2}
             mt={4}
         >
-            <Paper
-                key={id}
-                elevation={3}
-                sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}
-            >
-                <Typography variant="h6">{data.buch.titel.titel}</Typography>
-                <Typography variant="subtitle1">
-                    {data.buch.schlagwoerter}
-                </Typography>
-                <Typography variant="subtitle1">{data.buch.isbn}</Typography>
-                <Typography variant="subtitle1">
-                    {'UVP: ' + data.buch.preis + ',-'}
-                </Typography>
-            </Paper>
+            {uniqueBooks.map(({ id, isbn, titel, preis, art }) => (
+                <Paper
+                    key={id}
+                    elevation={3}
+                    sx={{ padding: 2, minWidth: 200, textAlign: 'center' }}
+                >
+                    <Link
+                        to={"/" + `${id}`}
+                        style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                        <Typography variant="h6">{titel.titel}</Typography>
+                        <Typography variant="subtitle1">{isbn}</Typography>
+                        <Typography variant="subtitle1">
+                            {art}
+                        </Typography>
+                        <Typography variant="subtitle1">
+                            {'UVP: ' + preis + ',-'}
+                        </Typography>
+                    </Link>
+                </Paper>
+            ))}
         </Box>
     );
 }

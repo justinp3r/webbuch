@@ -54,7 +54,7 @@ export default function BuchKomplett({ id }) {
                     {'UVP: ' + data.buch.preis + ',-'}
                 </Typography>
                 <Typography variant="subtitle1">
-                    {data.buch.lieferbar}
+                {data.buch.lieferbar ? 'Lieferbar' : 'Nicht lieferbar'}
                 </Typography>
                 <Typography variant="subtitle1">{data.buch.datum}</Typography>
                 <Typography variant="subtitle1">

@@ -5,6 +5,8 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import ClientStyleContext from './src/ClientStyleContext';
 import createEmotionCache from './src/createEmotionCache';
+import { hydrateRoot } from 'react-dom/client';
+
 
 interface ClientCacheProviderProps {
     children: React.ReactNode;
@@ -30,7 +32,7 @@ function ClientCacheProvider({ children }: ClientCacheProviderProps) {
 
 const hydrate = () => {
     React.startTransition(() => {
-        ReactDOM.hydrateRoot(
+        hydrateRoot(
             document,
             <ClientCacheProvider>
                 {}
