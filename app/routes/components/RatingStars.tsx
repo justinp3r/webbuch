@@ -14,7 +14,7 @@ export default function RatingStars() {
                 value={value}
                 onChange={(event, newValue) => {
                     setValue(newValue);
-                    console.log(typeof newValue);
+                    console.log(newValue);
                     window.localStorage.setItem('rating', JSON.stringify(newValue));
                 }}
             />

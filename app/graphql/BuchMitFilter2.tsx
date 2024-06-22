@@ -29,9 +29,6 @@ export default function BuchMitFilter2() {
     if (loading) return null;
     if (error) return `Error! ${error}`;
 
-
-
-
     return (
         <Box
             display="flex"
