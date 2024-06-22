@@ -2,7 +2,7 @@ import { Box, Paper, Rating, Typography } from '@mui/material';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 
-export default function BuchKomplett({ id }) {
+export default function BuchKomplett({ id } ) {
     if (id === null) {
         return id;
     }

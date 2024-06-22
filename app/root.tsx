@@ -6,6 +6,7 @@ import {
     Outlet,
     Scripts,
     ScrollRestoration,
+    useNavigate,
 } from '@remix-run/react';
 
 import { ThemeProvider } from '@mui/material/styles';
@@ -18,8 +19,6 @@ import { ApolloClient } from '../node_modules/@apollo/client/core/ApolloClient';
 import { createHttpLink } from '../node_modules/@apollo/client/link/http/createHttpLink';
 import { ApolloProvider } from '../node_modules/@apollo/client/react/context/ApolloProvider';
 import { InMemoryCache } from '../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
-import { useNavigate } from '@remix-run/react';
-import { isConstValueNode } from 'graphql';
 import { setContext } from '../node_modules/@apollo/client/link/context';
 import FilterButtonHeader from './routes/components/FilterButtonHeader';
 

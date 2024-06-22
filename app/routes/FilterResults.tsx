@@ -6,7 +6,7 @@ import { ApolloProvider } from '../../node_modules/@apollo/client/react/context/
 import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
 import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
-import BuchMitFilter from '~/graphql/BuchMitFilter';
+import BuchMitFilter from '../graphql/BuchMitFilter';
 import RadioLieferbar from './components/RadioLieferbar';
 
 const client = new ApolloClient({

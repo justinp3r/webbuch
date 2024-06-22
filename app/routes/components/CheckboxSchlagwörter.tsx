@@ -1,13 +1,12 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function CheckboxSchlagwörter() {
-    const [checkedJS, setCheckedJS] = React.useState(
+    const [checkedJS, setCheckedJS] = useState(
        /* JSON.parse(window.localStorage.getItem('checkedJS') || 'true')*/ true);
-    const [checkedTS, setCheckedTS] = React.useState(
+    const [checkedTS, setCheckedTS] = useState(
         /*JSON.parse(window.localStorage.getItem('checkedTS') || 'true')*/ true
     );
-    const checkWindow = typeof window !== 'undefined';
 
 
 

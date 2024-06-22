@@ -7,7 +7,7 @@ import {
 } from '../_index';
 import { useState } from 'react';
 
-export default function SearchButtonHeader({ searchText }) {
+export default function SearchButtonHeader({ searchText }: {searchText: string}) {
     const [valueAlleBuecher, setValueAlleBuecher] =
         useState(getSucheAlleBuecher);
     const [valueBuecherMitID, setValueBuecherMitID] = useState(getSucheBuchID);

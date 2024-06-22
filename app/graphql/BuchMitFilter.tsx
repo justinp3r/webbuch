@@ -2,11 +2,14 @@ import { Box, Paper, Typography } from '@mui/material';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 import { Link } from '@remix-run/react';
-import BuchMitFilter2 from './BuchMitFilter2';
 import { useMemo } from 'react';
 
-const removeDuplicates = (books) => {
-    const uniqueBooks = new Map();
+interface Book {
+    id: string;
+    [key: string]: any;  
+  }
+  const removeDuplicates = <T extends Book>(books: T[]): T[] => {
+    const uniqueBooks = new Map<string, T>();
     books.forEach(book => {
       if (!uniqueBooks.has(book.id)) {
         uniqueBooks.set(book.id, book);

@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function LieferbarToggle() {
   const [checkedLieferbar, setCheckedLieferbar] = useState(true);

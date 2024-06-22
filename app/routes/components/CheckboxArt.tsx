@@ -1,10 +1,10 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import React from 'react';
+import { useState } from 'react';
 
 function CheckboxArt() {
-    const [checkedKindle, setCheckedKindle] = React.useState(true);
+    const [checkedKindle, setCheckedKindle] = useState(true);
 
-    const [checkedDruck, setCheckedDruck] = React.useState(true);
+    const [checkedDruck, setCheckedDruck] = useState(true);
 
 
     const handleChangeKindle = (event: React.ChangeEvent<HTMLInputElement>) => {

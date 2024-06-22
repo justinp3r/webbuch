@@ -4,14 +4,10 @@ import CheckboxArt from './components/CheckboxArt';
 import { ApolloClient } from '../../node_modules/@apollo/client/core/ApolloClient';
 import { ApolloProvider } from '../../node_modules/@apollo/client/react/context/ApolloProvider';
 import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
-import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
-import { gql } from '../../node_modules/graphql-tag/src/index';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
-import { Button } from '@mui/material';
-import FilterButtonHeader from './components/FilterButtonHeader';
 import RadioLieferbar from './components/RadioLieferbar';
 
 const client = new ApolloClient({

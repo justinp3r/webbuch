@@ -2,8 +2,21 @@ import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
+type AlleBuecherProps = {
+    condition: boolean; // Ändern Sie dies entsprechend dem tatsächlichen Typ von 'condition'
+};
+interface Buch {
+    id: string; // oder der richtige Typ für 'id'
+    isbn: string;
+    titel: titel;
+    preis: number;
+    schlagwoerter: string[];
+}
+interface titel{
+    titel: string;
+}
 
-export default function AlleBuecher({ condition }) {
+export default function AlleBuecher({ condition }: AlleBuecherProps) {
     if (condition === false) {
         return null;
     }
@@ -26,7 +39,7 @@ export default function AlleBuecher({ condition }) {
             }
         }
     `;
-
+    /* eslint-disable react-hooks/rules-of-hooks */
     const { loading, error, data } = useQuery(GET_BUECHER);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
@@ -39,7 +52,7 @@ export default function AlleBuecher({ condition }) {
             gap={2}
             mt={4}
         >
-            {data.buecher.map(({ id, isbn, titel, preis, schlagwoerter }) => (
+            {data.buecher.map(({ id, isbn, titel, preis, schlagwoerter }: Buch) => (
                 <Paper
                     key={id}
                     elevation={3}

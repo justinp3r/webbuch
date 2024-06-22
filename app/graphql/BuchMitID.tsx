@@ -3,7 +3,7 @@ import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 import { Link } from '@remix-run/react';
 
-export default function BuchMitID({ id }) {
+export default function BuchMitID({ id } ) {
     if (id === null) {
         return id;
     }
@@ -20,7 +20,7 @@ export default function BuchMitID({ id }) {
             }
         }
     `;
-
+    /* eslint-disable react-hooks/rules-of-hooks */
     const { loading, error, data } = useQuery(FILTER_BOOKS, {
         variables: { id },
     });

@@ -1,11 +1,4 @@
 import { Button } from '@mui/material';
-import {
-    getSucheAlleBuecher,
-    setSucheAlleBuecher,
-    getSucheBuchID,
-    setSucheBuchID,
-} from '../_index';
-import { useState } from 'react';
 
 export default function FilterButtonHeader() {
 
