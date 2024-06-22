@@ -3,7 +3,6 @@ import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 import { Link } from '@remix-run/react';
 import BuchMitFilter2 from './BuchMitFilter2';
-import BuchMitFilterRating from './BuchMitFilterRating';
 import { useMemo } from 'react';
 
 const removeDuplicates = (books) => {
@@ -18,6 +17,9 @@ const removeDuplicates = (books) => {
 
 
 export default function BuchMitFilter() {
+
+    const lieferbar = (typeof window !== 'undefined' && window.localStorage.getItem('checkedLieferbar')) === "true" ? true: false;
+    const ignorieren = (typeof window !== 'undefined' && window.localStorage.getItem('checkedIgnorieren')) === "true" ? true: false;
 
     const art =  (typeof window !== 'undefined' && window.localStorage.getItem('checkedKindle')) === "true" ? "KINDLE": (typeof window !== 'undefined' && window.localStorage.getItem('checkedDruck') === "true")?"DRUCKAUSGABE" :null;
     let rating: number = Number((typeof window !== 'undefined' && window.localStorage.getItem('rating')));
@@ -43,34 +45,61 @@ export default function BuchMitFilter() {
             skip: art === null,
         });
     const FILTER_BOOKS_RATING = gql`    
-    query ($rating: Int = 4)  {
-        buecher(suchkriterien: {rating: $rating}) {
-            id
-            art
-            isbn
-            preis
-            titel {
-                titel
+        query ($rating: Int = 4)  {
+            buecher(suchkriterien: {rating: $rating}) {
+                id
+                art
+                isbn
+                preis
+                titel {
+                    titel
+                }
             }
         }
-    }
-`;
+    `;
 const { loading: loadingRating, error: errorRating, data: dataRating } = useQuery(FILTER_BOOKS_RATING, {
     variables: { rating },
     skip: rating === 10,
 });
 
+    const FILTER_BOOKS_LIEFERBAR = gql`    
+        query ($lieferbar: Boolean = true)  {
+            buecher(suchkriterien: {lieferbar: $lieferbar}) {
+                id
+                art
+                isbn
+                preis
+                titel {
+                    titel
+                }
+            }
+        }
+    `;
+const { loading: loadingLieferbar, error: errorLieferbar, data: dataLieferbar } = useQuery(FILTER_BOOKS_LIEFERBAR, {
+variables: { lieferbar },
+skip: ignorieren === true,
+});
+
+
+
+
+
+
+
 
 const uniqueBooks = useMemo(() => {
     const ratingBooks = dataRating?.buecher || [];
     const artBooks = dataArt?.buecher || [];
-    const allBooks = [...ratingBooks, ...artBooks];
+    const lieferbarBooks = dataLieferbar?.buecher || [];
+    const allBooks = [...ratingBooks, ...artBooks, ...lieferbarBooks];
     return removeDuplicates(allBooks);
-  }, [dataRating, dataArt]);
+  }, [dataRating, dataArt, dataLieferbar]);
 
-  if (loadingRating || loadingArt) return <p>Loading...</p>;
+  if (loadingRating || loadingArt || loadingLieferbar) return <p>Loading...</p>;
   if (errorRating) return <p>Error in rating query: {errorRating.message}</p>;
   if (errorArt) return <p>Error in art query: {errorArt.message}</p>;
+  if (errorLieferbar) return <p>Error in art query: {errorLieferbar.message}</p>;
+
 
     return (
         <Box

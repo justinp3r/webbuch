@@ -7,6 +7,7 @@ import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/
 import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import BuchMitFilter from '~/graphql/BuchMitFilter';
+import RadioLieferbar from './components/RadioLieferbar';
 
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
@@ -48,6 +49,8 @@ export default function Index() {
                     <CheckboxArt />
                     <h4>Schlagwörter</h4>
                     <CheckboxSchlagwörter />
+                    <h4>Lieferbar</h4>
+                    <RadioLieferbar></RadioLieferbar>
                     <RatingStars></RatingStars>
                 </Box>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>

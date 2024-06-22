@@ -12,6 +12,7 @@ import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
 import { Button } from '@mui/material';
 import FilterButtonHeader from './components/FilterButtonHeader';
+import RadioLieferbar from './components/RadioLieferbar';
 
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
@@ -66,6 +67,8 @@ export default function Index() {
                     <CheckboxArt />
                     <h4>Schlagwörter</h4>
                     <CheckboxSchlagwörter />
+                    <h4>Lieferbar</h4>
+                    <RadioLieferbar />
                     <h4>Bewertungen</h4>
                     <RatingStars></RatingStars>
                 </Box>
