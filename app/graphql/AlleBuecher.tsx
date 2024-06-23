@@ -2,11 +2,12 @@ import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
+
 type AlleBuecherProps = {
-    condition: boolean; // Ändern Sie dies entsprechend dem tatsächlichen Typ von 'condition'
+    condition: boolean; 
 };
 interface Buch {
-    id: string; // oder der richtige Typ für 'id'
+    id: string; 
     isbn: string;
     titel: titel;
     preis: number;

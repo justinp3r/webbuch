@@ -4,14 +4,12 @@ import React, { useState } from 'react';
 function LieferbarToggle() {
   const [checkedLieferbar, setCheckedLieferbar] = useState(true);
   const [checkedIgnorieren, setCheckedIgnorieren] = useState(true);
-
   const handleChangeLieferbar = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setCheckedLieferbar(newValue);
     window.localStorage.setItem('checkedLieferbar', JSON.stringify(!checkedLieferbar));
     console.log("Lieferbar" +  window.localStorage.getItem('checkedLieferbar'));
-}
-
+  }
   const handleChangeIgnorieren = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setCheckedIgnorieren(newValue);
@@ -44,5 +42,4 @@ function LieferbarToggle() {
     </FormGroup>
   );
 }
-
 export default LieferbarToggle;

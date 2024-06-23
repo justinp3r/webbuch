@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, TextField, Button, RadioGroup, FormControlLabel, Radio, Checkbox, FormControl, FormLabel, Rating, Select, MenuItem } from '@mui/material';
 import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation';
 import { gql } from '../../node_modules/graphql-tag/src/index';
@@ -38,7 +38,7 @@ const CREATE_BOOK_MUTATION = gql`
 
 const CreateBook = () => {
 
-  const [createBook, { data, loading,error1 }] = useMutation(CREATE_BOOK_MUTATION, {
+  const [createBook, { data, loading, error: error1 }] = useMutation(CREATE_BOOK_MUTATION, {
     onError:(err)=>{
         console.log("Fehler!: "+err);
     }  });
@@ -56,6 +56,10 @@ const CreateBook = () => {
   const [abbildungen, setAbbildungen] = useState([{ beschriftung: '', contentType: '' }]);
   const [Error0, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  if (loading) return null;
+  if (error1) return `Error! ${error1}`;
+  console.log(typeof data);
 
   const handleSchlagwoerterChange = (event) => {
     const value = event.target.value;

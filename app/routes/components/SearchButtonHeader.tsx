@@ -11,14 +11,15 @@ export default function SearchButtonHeader({ searchText }: {searchText: string})
     const [valueAlleBuecher, setValueAlleBuecher] =
         useState(getSucheAlleBuecher);
     const [valueBuecherMitID, setValueBuecherMitID] = useState(getSucheBuchID);
-
     const handleClick = () => {
         console.log('Suchtext:', searchText);
         setSucheAlleBuecher(false);
         setSucheBuchID(searchText);
 
         setValueAlleBuecher(getSucheAlleBuecher());
+        console.log(valueAlleBuecher)
         setValueBuecherMitID(getSucheBuchID());
+        console.log(valueBuecherMitID)
         console.log('GESUCHT WIRD ' + getSucheBuchID());
     };
 

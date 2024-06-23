@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 
 export default function FilterButtonHeader() {
-
     const handleClick = () => {
         console.log(
             'Status: ' +
@@ -11,7 +10,6 @@ export default function FilterButtonHeader() {
                     window.localStorage.getItem('checkedTS'),
                     window.localStorage.getItem('rating'),
         );
-
     };
 
     return (

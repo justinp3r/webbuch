@@ -12,17 +12,12 @@ import { getSucheAlleBuecher, getSucheBuchID } from './_index';
 
 const SucheAlleBuecher = getSucheAlleBuecher();
 const SucheBuchID = getSucheBuchID();
-
 console.log('ALLE BÜCHER: ' + SucheAlleBuecher);
 console.log('BUCH ID: ' + SucheBuchID);
-
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
 });
-
-// TODO: Workaround für Zertifikate finden
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export const meta: MetaFunction = () => {
     return [

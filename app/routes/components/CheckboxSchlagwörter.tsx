@@ -2,21 +2,13 @@ import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { useState } from 'react';
 
 function CheckboxSchlagwörter() {
-    const [checkedJS, setCheckedJS] = useState(
-       /* JSON.parse(window.localStorage.getItem('checkedJS') || 'true')*/ true);
-    const [checkedTS, setCheckedTS] = useState(
-        /*JSON.parse(window.localStorage.getItem('checkedTS') || 'true')*/ true
-    );
-
-
-
+    const [checkedJS, setCheckedJS] = useState(true);
+    const [checkedTS, setCheckedTS] = useState(true);
     const handleChangeJS = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedJS(event.target.checked);
         window.localStorage.setItem('checkedJS', JSON.stringify(!checkedJS));
-        console.log("JS" +  window.localStorage.getItem('checkedJS'));
-        
+        console.log("JS" +  window.localStorage.getItem('checkedJS'));   
     };
-
     const handleChangeTS = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedTS(event.target.checked);
         window.localStorage.setItem('checkedTS', JSON.stringify(!checkedTS));
@@ -50,5 +42,4 @@ function CheckboxSchlagwörter() {
         </>
     );
 }
-
 export default CheckboxSchlagwörter;
