@@ -17,13 +17,13 @@ jobs:
           node-version: '18'
         
       - run: npm ci
-    
-      # - name: run ESlint
-      #   run: npm run lint 
 
       - name: run Prettier
         run: npm run prettier
         
+      - name: run ESlint
+        run: npm run lint 
+
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
