@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
-
-export default function SearchBarHeader({ searchText, onSearchTextChange }) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export default function SearchBarHeader({ searchText, onSearchTextChange }:{searchText:string, onSearchTextChange: Function}) {
     return (
         <TextField
             label="Suche"

@@ -6,16 +6,13 @@ import { ApolloProvider } from '../../node_modules/@apollo/client/react/context/
 import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
 import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
-import BuchMitFilter from '~/graphql/BuchMitFilter';
+import BuchMitFilter from '../graphql/BuchMitFilter';
+import RadioLieferbar from './components/RadioLieferbar';
 
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
 });
-
-// TODO: Workaround für Zertifikate finden
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 export const meta: MetaFunction = () => {
     return [
         { title: 'Webbuch' },
@@ -48,6 +45,8 @@ export default function Index() {
                     <CheckboxArt />
                     <h4>Schlagwörter</h4>
                     <CheckboxSchlagwörter />
+                    <h4>Lieferbar</h4>
+                    <RadioLieferbar></RadioLieferbar>
                     <RatingStars></RatingStars>
                 </Box>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>

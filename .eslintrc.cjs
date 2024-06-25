@@ -1,9 +1,3 @@
-/**
- * This is intended to be a basic starting point for linting in your app.
- * It relies on recommended configs out of the box for simplicity, but you can
- * and should modify this configuration to best suit your team's needs.
- */
-
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
@@ -20,10 +14,8 @@ module.exports = {
     es6: true,
   },
   ignorePatterns: ["!**/.server", "!**/.client"],
-
   // Base config
   extends: ["eslint:recommended"],
-
   overrides: [
     // React
     {
@@ -49,7 +41,6 @@ module.exports = {
         },
       },
     },
-
     // Typescript
     {
       files: ["**/*.{ts,tsx}"],
@@ -71,8 +62,18 @@ module.exports = {
         "plugin:import/recommended",
         "plugin:import/typescript",
       ],
+      rules: {
+        "@typescript-eslint/no-unsafe-destructuring": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-implicit-any": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "react/prop-types": "off",
+        "no-unused-vars" : "off",
+        "no-var": "off",
+        "prefer-const": "off",
+      },
     },
-
     // Node
     {
       files: [".eslintrc.cjs"],

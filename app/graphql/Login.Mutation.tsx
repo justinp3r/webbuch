@@ -14,7 +14,6 @@ export default function SignInMutation() {
             }
         }
     `;
-
     const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
         variables: {
             username: 'admin',
@@ -29,6 +28,9 @@ export default function SignInMutation() {
     React.useEffect(() => {
         login();
     }, [login]);
+
+    if (loading) return null;
+    if (error) return `Error! ${error}`;
 
     return <p>{data.login.access_token}</p>;
 }
