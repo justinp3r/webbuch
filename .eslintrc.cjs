@@ -72,6 +72,15 @@ module.exports = {
         "no-unused-vars" : "off",
         "no-var": "off",
         "prefer-const": "off",
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            types: {
+              Function: false, // Deaktiviert das Verbot für den `Function` Typ
+            },
+            extendDefaults: true,
+          },
+        ],
       },
     },
     // Node
