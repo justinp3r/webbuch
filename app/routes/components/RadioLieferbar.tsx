@@ -10,6 +10,7 @@ function LieferbarToggle() {
     window.localStorage.setItem('checkedLieferbar', JSON.stringify(!checkedLieferbar));
     console.log("Lieferbar" +  window.localStorage.getItem('checkedLieferbar'));
   }
+  
   const handleChangeIgnorieren = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setCheckedIgnorieren(newValue);

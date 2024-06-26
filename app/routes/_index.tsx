@@ -20,6 +20,7 @@ export const meta: MetaFunction = () => {
         { name: 'description', content: 'Welcome to our Semesterproject!' },
     ];
 };
+
 let sucheBuchID: string | null = null;
 
 export const getSucheBuchID = () => sucheBuchID;

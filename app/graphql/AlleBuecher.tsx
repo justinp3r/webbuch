@@ -10,6 +10,7 @@ interface Buch {
     preis: number;
     schlagwoerter: string[];
 }
+
 interface titel{
     titel: string;
 }
@@ -34,6 +35,7 @@ export default function AlleBuecher() {
             }
         }
     `;
+    
     /* eslint-disable react-hooks/rules-of-hooks */
     const { loading, error, data } = useQuery(GET_BUECHER);
     if (loading) return <p>Loading...</p>;

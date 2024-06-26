@@ -7,6 +7,7 @@ export default function BuchMitID({ id } :{id: string | null } ) {
     if (id === null) {
         return id;
     }
+    
     const path = "/" + id;
     const FILTER_BOOKS = gql`
         query BUCH($id: ID!) {
@@ -21,6 +22,7 @@ export default function BuchMitID({ id } :{id: string | null } ) {
             }
         }
     `;
+
     /* eslint-disable react-hooks/rules-of-hooks */
     const { loading, error, data } = useQuery(FILTER_BOOKS, {
         variables: { id },

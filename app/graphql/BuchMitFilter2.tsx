@@ -10,6 +10,7 @@ interface Buch {
     titel: Titel;
     schlagwoerter: string[];
 }
+
 interface Titel{
     titel: string;
 }
@@ -33,9 +34,11 @@ export default function BuchMitFilter2() {
         }
     }
     `;
+
     const { loading, error, data } = useQuery(FILTER_BOOKS_SCHLAG, {
         variables: { schlagwoerter },
     });
+    
     if (loading) return null;
     if (error) return `Error! ${error}`;
 
