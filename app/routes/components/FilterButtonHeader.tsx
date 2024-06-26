@@ -1,14 +1,6 @@
 import { Button } from '@mui/material';
-import {
-    getSucheAlleBuecher,
-    setSucheAlleBuecher,
-    getSucheBuchID,
-    setSucheBuchID,
-} from '../_index';
-import { useState } from 'react';
 
 export default function FilterButtonHeader() {
-
     const handleClick = () => {
         console.log(
             'Status: ' +
@@ -18,7 +10,6 @@ export default function FilterButtonHeader() {
                     window.localStorage.getItem('checkedTS'),
                     window.localStorage.getItem('rating'),
         );
-
     };
 
     return (

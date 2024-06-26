@@ -3,6 +3,7 @@ import { Rating, Box } from '@mui/material';
 
 export default function RatingStars() {
     const [value, setValue] = React.useState<number | null>(2);
+    
     return (
         <Box
             sx={{

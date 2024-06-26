@@ -4,9 +4,7 @@ import CheckboxArt from './components/CheckboxArt';
 import { ApolloClient } from '../../node_modules/@apollo/client/core/ApolloClient';
 import { ApolloProvider } from '../../node_modules/@apollo/client/react/context/ApolloProvider';
 import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
-import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
-import { gql } from '../../node_modules/graphql-tag/src/index';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
@@ -14,17 +12,12 @@ import { getSucheAlleBuecher, getSucheBuchID } from './_index';
 
 const SucheAlleBuecher = getSucheAlleBuecher();
 const SucheBuchID = getSucheBuchID();
-
 console.log('ALLE BÜCHER: ' + SucheAlleBuecher);
 console.log('BUCH ID: ' + SucheBuchID);
-
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
 });
-
-// TODO: Workaround für Zertifikate finden
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export const meta: MetaFunction = () => {
     return [

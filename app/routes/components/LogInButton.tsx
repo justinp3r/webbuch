@@ -12,6 +12,7 @@ const LoginLogoutButtons: React.FC<LoginLogoutButtonsProps> = ({
     onLogout,
     onLogin,
 }) => {
+    
     return isLoggedIn ? (
         <Button
             variant="contained"
@@ -32,5 +33,4 @@ const LoginLogoutButtons: React.FC<LoginLogoutButtonsProps> = ({
         </Button>
     );
 };
-
 export default LoginLogoutButtons;

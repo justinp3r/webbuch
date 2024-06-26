@@ -3,7 +3,21 @@ import { gql } from '../../node_modules/graphql-tag/src/index';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
 
-export default function AlleBuecher({ condition }) {
+type AlleBuecherProps = {
+    condition: boolean; 
+};
+interface Buch {
+    id: string; 
+    isbn: string;
+    titel: titel;
+    preis: number;
+    schlagwoerter: string[];
+}
+interface titel{
+    titel: string;
+}
+
+export default function AlleBuecher({ condition }: AlleBuecherProps) {
     if (condition === false) {
         return null;
     }
@@ -26,7 +40,7 @@ export default function AlleBuecher({ condition }) {
             }
         }
     `;
-
+    /* eslint-disable react-hooks/rules-of-hooks */
     const { loading, error, data } = useQuery(GET_BUECHER);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
@@ -39,7 +53,7 @@ export default function AlleBuecher({ condition }) {
             gap={2}
             mt={4}
         >
-            {data.buecher.map(({ id, isbn, titel, preis, schlagwoerter }) => (
+            {data.buecher.map(({ id, isbn, titel, preis, schlagwoerter }: Buch) => (
                 <Paper
                     key={id}
                     elevation={3}

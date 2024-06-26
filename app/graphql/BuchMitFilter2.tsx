@@ -2,6 +2,18 @@ import { Box, Paper, Typography } from '@mui/material';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 import { Link } from '@remix-run/react';
+interface Buch {
+    id: string; // oder der richtige Typ für 'id'
+    isbn: string;
+    art: string;
+    preis: number;
+    titel: Titel;
+    schlagwoerter: string[];
+}
+interface Titel{
+    titel: string;
+}
+
 
 export default function BuchMitFilter2() {
 
@@ -37,7 +49,7 @@ export default function BuchMitFilter2() {
             gap={2}
             mt={4}
         >
-            {data.buecher.map(({ id, isbn, titel, preis, art }) => (
+            {data.buecher.map(({ id, isbn, titel, preis, art }: Buch) => (
                 <Paper
                     key={id}
                     elevation={3}

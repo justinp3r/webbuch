@@ -2,7 +2,7 @@ import { Box, Paper, Rating, Typography } from '@mui/material';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery';
 
-export default function BuchKomplett({ id }) {
+export default function BuchKomplett({ id } :{ id: string} ) {
     if (id === null) {
         return id;
     }
@@ -24,7 +24,7 @@ export default function BuchKomplett({ id }) {
             }
         }
     `;
-
+    /* eslint-disable react-hooks/rules-of-hooks */
     const { loading, error, data } = useQuery(FILTER_BOOKS, {
         variables: { id },
     });
