@@ -15,7 +15,6 @@ interface titel{
 }
 
 export default function AlleBuecher() {
-
     const GET_BUECHER = gql`
         query GetBuecher {
             buecher {

@@ -13,7 +13,7 @@ const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
 });
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 export const meta: MetaFunction = () => {
     return [
         { title: 'Webbuch' },
@@ -21,18 +21,13 @@ export const meta: MetaFunction = () => {
     ];
 };
 let sucheBuchID: string | null = null;
-let sucheAlleBuecher = true;
+
 export const getSucheBuchID = () => sucheBuchID;
 export const setSucheBuchID = (newValue: string) => {
     sucheBuchID = newValue;
 };
-export const getSucheAlleBuecher = () => sucheAlleBuecher;
-export const setSucheAlleBuecher = (newValue: boolean) => {
-    sucheAlleBuecher = newValue;
-};
 
 export default function Index() {
-    
     return (
         <>
             <Box display="flex">

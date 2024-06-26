@@ -14,9 +14,7 @@ interface Titel{
     titel: string;
 }
 
-
 export default function BuchMitFilter2() {
-
     const schlagwoerter: string[] = []; 
     (typeof window !== 'undefined' && window.localStorage.getItem('checkedJS')) === "true" && schlagwoerter.push("JAVASCRIPT");
     (typeof window !== 'undefined' && window.localStorage.getItem('checkedTS')) === "true" && schlagwoerter.push("TYPESCRIPT");

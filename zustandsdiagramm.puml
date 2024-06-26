@@ -1,0 +1,31 @@
+@startuml zustandsdiagramm
+
+state webbuch {
+    [*] --> Startpage
+    Startpage --> Suchformular : Suchkriterien eingeben
+    Suchformular --> Warten : Button "SUCHEN"
+    state a <<choice>>
+    Warten --> a : Suchergebnis eingetroffen
+    state Suchergebnis {
+        a --> Fehlermeldung : Keine Bücher gefunden
+        a --> GefundeneBücher : Bücher Gefunden
+    }
+    state f <<fork>>
+    Fehlermeldung --> f : Link "WEBBUCH"
+    GefundeneBücher --> f : Link "WEBBUCH"
+    f --> Startpage
+
+    Startpage --> LogIn : Button "LOGIN"
+    state b <<choice>>
+    LogIn --> b : Button "ANMELDEN"
+    b --> LogIn : falsche Daten
+    b --> Startpage : korrekte Daten
+
+    Startpage --> CreateBook : Button "HINZUFÜGEN"
+    state c <<choice>>
+    CreateBook --> c : Button "Erstellen"
+    c --> CreateBook : ungültige Eingabe
+    c --> Startpage : gültige Eingabe
+}
+
+@enduml

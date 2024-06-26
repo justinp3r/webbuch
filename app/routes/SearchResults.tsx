@@ -7,12 +7,10 @@ import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/
 import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import BuchMitID from '~/graphql/BuchMitID';
-import { getSucheAlleBuecher, getSucheBuchID } from './_index';
+import { getSucheBuchID } from './_index';
 
-const SucheAlleBuecher = getSucheAlleBuecher();
 const SucheBuchID = getSucheBuchID();
-console.log('ALLE BÜCHER: ' + SucheAlleBuecher);
-console.log('BUCH ID: ' + SucheBuchID);
+
 const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
