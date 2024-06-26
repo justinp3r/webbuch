@@ -4,6 +4,7 @@ import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery
 import { Link } from '@remix-run/react';
 import { useMemo } from 'react';
 
+// das ein kommentar
 interface Book {
     id: string;
     [key: string]: any;  
