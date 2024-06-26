@@ -13,6 +13,7 @@ const client = new ApolloClient({
     uri: 'https://localhost:3000/graphql',
     cache: new InMemoryCache(),
 });
+
 export const meta: MetaFunction = () => {
     return [
         { title: 'Webbuch' },

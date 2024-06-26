@@ -14,6 +14,7 @@ export default function SignInMutation() {
             }
         }
     `;
+    
     const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
         variables: {
             username: 'admin',

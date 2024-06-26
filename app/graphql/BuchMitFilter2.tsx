@@ -10,13 +10,12 @@ interface Buch {
     titel: Titel;
     schlagwoerter: string[];
 }
+
 interface Titel{
     titel: string;
 }
 
-
 export default function BuchMitFilter2() {
-
     const schlagwoerter: string[] = []; 
     (typeof window !== 'undefined' && window.localStorage.getItem('checkedJS')) === "true" && schlagwoerter.push("JAVASCRIPT");
     (typeof window !== 'undefined' && window.localStorage.getItem('checkedTS')) === "true" && schlagwoerter.push("TYPESCRIPT");
@@ -35,9 +34,11 @@ export default function BuchMitFilter2() {
         }
     }
     `;
+
     const { loading, error, data } = useQuery(FILTER_BOOKS_SCHLAG, {
         variables: { schlagwoerter },
     });
+    
     if (loading) return null;
     if (error) return `Error! ${error}`;
 

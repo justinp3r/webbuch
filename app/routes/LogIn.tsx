@@ -13,8 +13,6 @@ import { useNavigate } from '@remix-run/react';
 import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation';
 import { gql } from '../../node_modules/graphql-tag/src/index';
 
-/* eslint-disable jsx-a11y/no-autofocus */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -39,6 +37,7 @@ export default function SignIn() {
             }
         }
     `;
+
     const [login, { data: mutationData, loading, error }] = useMutation(
         LOGIN_MUTATION,
         {
@@ -52,9 +51,11 @@ export default function SignIn() {
             },
         },
     );
+    
     if (loading) return null;
     if (error) return `Error! ${error}`;
     console.log(typeof mutationData);
+    
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
             event.preventDefault();
@@ -110,6 +111,7 @@ export default function SignIn() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            // eslint-disable-next-line jsx-a11y/no-autofocus
                             autoFocus
                         />
                         <TextField

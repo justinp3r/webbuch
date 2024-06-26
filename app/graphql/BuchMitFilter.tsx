@@ -4,20 +4,21 @@ import { useQuery } from '../../node_modules/@apollo/client/react/hooks/useQuery
 import { Link } from '@remix-run/react';
 import { useMemo } from 'react';
 
-// das ein kommentar
 interface Book {
     id: string;
     [key: string]: any;  
-  }
-  const removeDuplicates = <T extends Book>(books: T[]): T[] => {
+}
+
+const removeDuplicates = <T extends Book>(books: T[]): T[] => {
     const uniqueBooks = new Map<string, T>();
     books.forEach(book => {
-      if (!uniqueBooks.has(book.id)) {
+        if (!uniqueBooks.has(book.id)) {
         uniqueBooks.set(book.id, book);
-      }
+        }
     });
+
     return Array.from(uniqueBooks.values());
-  };
+};
 
 export default function BuchMitFilter() {
     const lieferbar = (typeof window !== 'undefined' && window.localStorage.getItem('checkedLieferbar')) === "true" ? true: false;
@@ -26,6 +27,7 @@ export default function BuchMitFilter() {
     let rating: number = Number((typeof window !== 'undefined' && window.localStorage.getItem('rating')));
     rating = isNaN(rating)? 10: rating;
     console.log("rating: " + rating + " art: " + art);
+
     const FILTER_BOOKS_ART = gql`    
         query ($art: Art = KINDLE)  {
             buecher(suchkriterien: {art: $art}) {
@@ -39,6 +41,7 @@ export default function BuchMitFilter() {
             }
         }
     `;
+
     const { loading: loadingArt, error: errorArt, data: dataArt } = useQuery(FILTER_BOOKS_ART, {
         variables: { art },
         skip: art === null,
@@ -57,6 +60,7 @@ export default function BuchMitFilter() {
             }
         }
     `;
+
     const { loading: loadingRating, error: errorRating, data: dataRating } = useQuery(FILTER_BOOKS_RATING, {
         variables: { rating },
         skip: rating === 10,
@@ -75,6 +79,7 @@ export default function BuchMitFilter() {
             }
         }
     `;
+    
     const { loading: loadingLieferbar, error: errorLieferbar, data: dataLieferbar } = useQuery(FILTER_BOOKS_LIEFERBAR, {
         variables: { lieferbar },
         skip: ignorieren === true,
