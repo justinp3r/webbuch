@@ -6,7 +6,6 @@ import { ApolloProvider } from '../../node_modules/@apollo/client/react/context/
 import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/inMemoryCache';
 import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
-import AlleBuecher from '~/graphql/AlleBuecher';
 import BuchMitID from '~/graphql/BuchMitID';
 import { getSucheAlleBuecher, getSucheBuchID } from './_index';
 
@@ -57,7 +56,6 @@ export default function Index() {
 
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
                     <ApolloProvider client={client}>
-                        <AlleBuecher condition={SucheAlleBuecher} />
                         <BuchMitID id={SucheBuchID}></BuchMitID>
                     </ApolloProvider>
                 </Box>

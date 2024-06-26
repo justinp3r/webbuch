@@ -3,9 +3,6 @@ import { gql } from '../../node_modules/graphql-tag/src/index';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
 
-type AlleBuecherProps = {
-    condition: boolean; 
-};
 interface Buch {
     id: string; 
     isbn: string;
@@ -17,10 +14,8 @@ interface titel{
     titel: string;
 }
 
-export default function AlleBuecher({ condition }: AlleBuecherProps) {
-    if (condition === false) {
-        return null;
-    }
+export default function AlleBuecher() {
+
     const GET_BUECHER = gql`
         query GetBuecher {
             buecher {

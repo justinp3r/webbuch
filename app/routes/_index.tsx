@@ -7,7 +7,6 @@ import { InMemoryCache } from '../../node_modules/@apollo/client/cache/inmemory/
 import { Box } from '@mui/material';
 import RatingStars from './components/RatingStars';
 import AlleBuecher from '~/graphql/AlleBuecher';
-import BuchMitID from '~/graphql/BuchMitID';
 import RadioLieferbar from './components/RadioLieferbar';
 
 const client = new ApolloClient({
@@ -65,8 +64,7 @@ export default function Index() {
                 </Box>
                 <Box sx={{ flexGrow: 1, padding: '20px' }}>
                     <ApolloProvider client={client}>
-                        <AlleBuecher condition={sucheAlleBuecher} />
-                        <BuchMitID id={sucheBuchID}></BuchMitID>
+                        <AlleBuecher/>
                     </ApolloProvider>
                 </Box>
             </Box>
